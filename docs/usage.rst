@@ -5,20 +5,7 @@ Usage
 ``jsonl``
 =========
 
-.. code-block:: toml
-
-   [[alias]]
-
-   name = "jsonl"
-   help = "Load jsonlines into python objects."
-
-   [[alias.stage]]
-
-   command = "map"
-   options = {code="json.loads"}
-
-
-Now we can use it like a regular command:
+Read line-separated json.
 
 .. code-block:: bash
 
@@ -38,31 +25,19 @@ The new command ``jsonl`` can be used in pipelines as well. To get the maximum v
 ``yml2json``
 ============
 
-Convenient for removing trailing commas.
+Convenient for removing trailing commas or handling single-quoted strings.
 
 .. code-block:: bash
 
     $ mario yml2json <<<'{"x": 1,}'
     {"x": 1}
 
-.. code-block:: toml
-
-    [[alias]]
-
-        name = "yml2json"
-        help = "Convert yaml to json"
-
-        [[alias.stage]]
-
-        command = "stack"
-        options = {code="yaml.safe_load ! json.dumps"}
-
 
 
 ``xpath``
 =========
 
-Pull text out of xml documents.
+Pull data out of xml documents using xpath.
 
 .. code-block:: bash
 
@@ -77,63 +52,18 @@ Pull text out of xml documents.
     Anything in here
 
 
-.. code-block:: toml
-
-    [[alias]]
-        name="xpath"
-        help = "Find xml elements matching xpath query."
-        arguments = [{name="query", type="str"}]
-        inject_values=["query"]
-
-        [[alias.stage]]
-        command = "stack"
-        options= {code="x.encode() ! io.BytesIO ! lxml.etree.parse ! x.findall(query) ! list" }
-
-        [[alias.stage]]
-        command="chain"
 
 
 ``jo``
 ======
+
+Create json objects with a simple syntax.
 
 .. code-block:: bash
 
     $ mario jo 'name=Alice age=21 hobbies=["running"]'
     {"name": "Alice", "age": 21, "hobbies": ["running"]}
 
-
-.. code-block:: toml
-
-    [[alias]]
-
-
-        name="jo"
-        help="Make json objects"
-        arguments=[{name="pairs", type="str"}]
-        inject_values=["pairs"]
-
-        [[alias.stage]]
-        command = "eval"
-        options = {code="pairs"}
-
-        [[alias.stage]]
-        command = "map"
-        options = {code="shlex.split(x, posix=False)"}
-
-        [[alias.stage]]
-        command = "chain"
-
-        [[alias.stage]]
-        command = "map"
-        options = {code="x.partition('=') ! [x[0], ast.literal_eval(re.sub(r'^(?P<value>[A-Za-z]+)$', r'\"\\g<value>\"', x[2]))]"}
-
-        [[alias.stage]]
-        command = "apply"
-        options = {"code"="dict"}
-
-        [[alias.stage]]
-        command = "map"
-        options = {code="json.dumps"}
 
 
 ``csv``
@@ -161,56 +91,4 @@ try:
     {'name': 'Bob', 'age': '25'}
 
 
-.. code-block:: toml
-
-    base_exec_before = '''
-    import csv
-    import typing as t
-
-
-    def read_csv(
-        file, header: bool, **kwargs
-    ) -> t.Iterable[t.Dict[t.Union[str, int], str]]:
-        "Read csv rows into an iterable of dicts."
-
-        rows = list(file)
-
-        first_row = next(csv.reader(rows))
-        if header:
-            fieldnames = first_row
-            reader = csv.DictReader(rows, fieldnames=fieldnames, **kwargs)
-            return list(reader)[1:]
-
-        fieldnames = range(len(first_row))
-        return csv.DictReader(rows, fieldnames=fieldnames, **kwargs)
-
-    '''
-
-
-
-
-    [[alias]]
-        name = "csv"
-        help = "Load csv rows into python dicts. With --no-header, keys will be numbered from 0."
-        inject_values=["delimiter", "header"]
-
-        [[alias.options]]
-        name = "--delimiter"
-        default = ","
-        help = "field delimiter character"
-
-        [[alias.options]]
-        name = "--header/--no-header"
-        default=true
-        help = "Treat the first row as a header?"
-
-        [[alias.stage]]
-        command = "apply"
-        options = {code="read_csv(x, header=header, delimiter=delimiter)"}
-
-        [[alias.stage]]
-        command = "chain"
-
-        [[alias.stage]]
-        command = "map"
-        options = {code="dict(x)"}
+Specify the ``--delimiter=`` or ``--no-header`` options as needed.
