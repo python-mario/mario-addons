@@ -22,7 +22,7 @@ Now we can use it like a regular command:
 
 .. code-block:: bash
 
-    % mario jsonl  <<< $'{"a":1, "b":2}\n{"a": 5, "b":9}'
+    $ mario jsonl  <<< $'{"a":1, "b":2}\n{"a": 5, "b":9}'
     {'a': 1, 'b': 2}
     {'a': 5, 'b': 9}
 
@@ -42,7 +42,7 @@ Convenient for removing trailing commas.
 
 .. code-block:: bash
 
-    % mario yml2json <<<'{"x": 1,}'
+    $ mario yml2json <<<'{"x": 1,}'
     {"x": 1}
 
 .. code-block:: toml
@@ -67,21 +67,14 @@ Pull text out of xml documents.
 .. code-block:: bash
 
 
-    % mario xpath '//'  map 'x.text' <<EOF
+    $ mario xpath '//'  map 'x.text' <<EOF
           <slide type="all">
             <title>Overview</title>
-              <item>Anything <em>can be</em> in here</item>
-              <item>Or <em>also</em> in here</item>
+              <item>Anything in here</item>
           </slide>
     EOF
-
     Overview
-    Anything
-    can be
-    Or
-    also
-
-
+    Anything in here
 
 
 .. code-block:: toml
@@ -105,7 +98,7 @@ Pull text out of xml documents.
 
 .. code-block:: bash
 
-    % mario jo 'name=Alice age=21 hobbies=["running"]'
+    $ mario jo 'name=Alice age=21 hobbies=["running"]'
     {"name": "Alice", "age": 21, "hobbies": ["running"]}
 
 
@@ -149,9 +142,8 @@ Pull text out of xml documents.
 Read a csv file into Python dicts. Given a csv like this:
 
 
-.. code-block:: bash
+.. code-block::
 
-    % cat names.csv
     name,age
     Alice,21
     Bob,25
@@ -160,7 +152,11 @@ try:
 
 .. code-block:: bash
 
-    % mario csv < names.csv
+    $ mario csv <<EOF
+    name,age
+    Alice,21
+    Bob,25
+    EOF
     {'name': 'Alice', 'age': '21'}
     {'name': 'Bob', 'age': '25'}
 
