@@ -85,7 +85,7 @@ Pull data out of xml documents using xpath.
 ``yml2json``
 ============
 
-Convenient for removing trailing commas or handling single-quoted strings.
+Convert yaml to json. Convenient for removing trailing commas or handling single-quoted strings.
 
 .. code-block:: bash
 
