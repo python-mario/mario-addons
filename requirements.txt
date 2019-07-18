@@ -4,5 +4,31 @@
 #
 #    pip-compile --output-file=requirements.txt requirements.in
 #
+anyio==1.0.0              # via asks
+appdirs==1.4.3            # via mario
+asks==2.3.5               # via mario
+async-exit-stack==1.0.1   # via mario
+async-generator==1.10     # via anyio, asks, mario, trio
+attrs==19.1.0             # via mario, outcome, trio
+bump2version==0.5.10      # via mario
+click==7.0                # via mario
+h11==0.9.0                # via asks
+idna==2.8                 # via trio
 lxml==4.3.4
+mario==0.0.118
+marshmallow==3.0.0rc8     # via mario
+mypy-extensions==0.4.1    # via mypy, trio-typing
+mypy==0.720               # via trio-typing
+outcome==1.0.0            # via trio
+parso==0.5.1              # via mario
+pyrsistent==0.15.3        # via mario
 pyyaml==5.1.1
+six==1.12.0               # via pyrsistent
+sniffio==1.1.0            # via anyio, trio
+sortedcontainers==2.1.0   # via trio
+toml==0.10.0              # via mario
+toolz==0.10.0             # via mario
+trio-typing==0.2.0        # via mario
+trio==0.11.0              # via mario, trio-typing
+typed-ast==1.4.0          # via mypy
+typing-extensions==3.7.4  # via mypy, trio-typing
