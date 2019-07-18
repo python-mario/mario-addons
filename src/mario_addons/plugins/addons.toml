@@ -1,0 +1,99 @@
+### Convert yaml to json
+
+[[alias]]
+
+    name = "yml2json"
+    short_help = "Convert yaml to json"
+
+    [[alias.stage]]
+
+    command = "stack"
+    options = {code="yaml.safe_load ! json.dumps"}
+
+### Search for xpath elements with xpath
+
+[[alias]]
+    name="xpath"
+    short_help = "Find xml elements matching xpath query."
+    arguments = [{name="query", type="str"}]
+    inject_values=["query"]
+
+    [[alias.stage]]
+
+    command = "stack"
+    options= {code="x.encode() ! io.BytesIO ! lxml.etree.parse ! x.findall(query) ! map(lambda y: y, x) ! list" }
+
+    [[alias.stage]]
+    command="chain"
+
+### Generate json objects
+
+[[alias]]
+
+
+    name="jo"
+    short_help="Make json objects"
+    arguments=[{name="pairs", type="str"}]
+    inject_values=["pairs"]
+
+    [[alias.stage]]
+    command = "eval"
+    options = {code="pairs"}
+
+    [[alias.stage]]
+    command = "map"
+    options = {code="shlex.split(x, posix=False)"}
+
+    [[alias.stage]]
+    command = "chain"
+
+    [[alias.stage]]
+    command = "map"
+    options = {code="x.partition('=') ! [x[0], ast.literal_eval(re.sub(r'^(?P<value>[A-Za-z]+)$', r'\"\\g<value>\"', x[2]))]"}
+
+    [[alias.stage]]
+    command = "apply"
+    options = {"code"="dict"}
+
+    [[alias.stage]]
+    command = "map"
+    options = {code="json.dumps"}
+
+
+[[alias]]
+
+name = "jsonl"
+short_help = "Load jsonlines into python objects"
+
+[[alias.stage]]
+
+command = "map"
+
+options =  {code="json.loads"}
+
+
+[[alias]]
+    name = "csv"
+    help = "Load csv rows into python objects"
+    inject_values=["delimiter", "header"]
+
+    [[alias.options]]
+    name = "--delimiter"
+    default = ","
+    help = "field delimiter character"
+
+    [[alias.options]]
+    name = "--header/--no-header"
+    default=true
+    help = "Treat the first row as a header?"
+
+    [[alias.stage]]
+    command = "apply"
+    options = {code="mario_addons.plugins.addons.read_csv(x, header=header)"}
+
+    [[alias.stage]]
+    command = "chain"
+
+    [[alias.stage]]
+    command = "map"
+    options = {code="dict(x)"}

@@ -81,5 +81,5 @@ setup(
         #   "rst": ["docutils>=0.11"],
         #   ":python_version=="2.6"": ["argparse"],
     },
-    entry_points={"console_scripts": ["mario-addons = mario_addons.cli:cli"]},
+    entry_points={"mario_plugins": "addons = mario_addons.plugins"},
 )
