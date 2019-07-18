@@ -10,7 +10,7 @@ Overview
     * - docs
       - |docs|
     * - tests
-      - | |travis| |appveyor|
+      - | |travis|
         |
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
@@ -25,9 +25,6 @@ Overview
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/python-mario/mario-addons
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/python-mario/mario-addons?branch=master&svg=true
-    :alt: AppVeyor Build Status
-    :target: https://ci.appveyor.com/project/python-mario/mario-addons
 
 .. |version| image:: https://img.shields.io/pypi/v/mario-addons.svg
     :alt: PyPI Package latest release
