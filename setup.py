@@ -18,10 +18,10 @@ from setuptools import setup
 
 def read(*names, **kwargs):
     with io.open(
-        join(dirname(__file__), *names),
-        encoding=kwargs.get("encoding", "utf8")
+        join(dirname(__file__), *names), encoding=kwargs.get("encoding", "utf8")
     ) as fh:
         return fh.read()
+
 
 try:
     with open("requirements.in") as f:
@@ -34,13 +34,16 @@ except FileNotFoundError:
 setup(
     name="mario-addons",
     version="0.1.0",
-    description='More commands for Mario.',
-    long_description="%s\n%s" % (
-        re.compile("^.. start-badges.*^.. end-badges", re.M | re.S).sub("", read("README.rst")),
-        re.sub(":[a-z]+:`~?(.*?)`", r"``\1``", read("CHANGELOG.rst"))
+    description="More commands for Mario.",
+    long_description="%s\n%s"
+    % (
+        re.compile("^.. start-badges.*^.. end-badges", re.M | re.S).sub(
+            "", read("README.rst")
+        ),
+        re.sub(":[a-z]+:`~?(.*?)`", r"``\1``", read("CHANGELOG.rst")),
     ),
-    author='Mario contributors',
-    author_email='email@example.com',
+    author="Mario contributors",
+    author_email="email@example.com",
     url="https://github.com/python-mario/mario-addons",
     packages=find_packages("src"),
     package_dir={"": "src"},
@@ -71,16 +74,12 @@ setup(
         # eg: "keyword1", "keyword2", "keyword3",
     ],
     install_requires=INSTALL_REQUIRES
-        # eg: "aspectlib==1.1.1", "six>=1.7",
+    # eg: "aspectlib==1.1.1", "six>=1.7",
     ,
     extras_require={
         # eg:
         #   "rst": ["docutils>=0.11"],
         #   ":python_version=="2.6"": ["argparse"],
     },
-    entry_points={
-        "console_scripts": [
-            "mario-addons = mario_addons.cli:cli",
-        ]
-    },
+    entry_points={"console_scripts": ["mario-addons = mario_addons.cli:cli"]},
 )

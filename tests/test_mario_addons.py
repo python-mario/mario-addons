@@ -1,4 +1,3 @@
-
 from click.testing import CliRunner
 
 from mario_addons.cli import main
