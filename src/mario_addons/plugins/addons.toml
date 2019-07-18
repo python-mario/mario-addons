@@ -3,7 +3,7 @@
 [[alias]]
 
     name = "yml2json"
-    short_help = "Convert yaml to json"
+    help = "Convert yaml to json"
 
     [[alias.stage]]
     command = "stack"
@@ -21,7 +21,7 @@
 
 [[alias]]
     name="xpath"
-    short_help = "Find xml elements matching xpath query."
+    help = "Find xml elements matching xpath query."
     arguments = [{name="query", type="str"}]
     inject_values=["query"]
 
@@ -55,7 +55,7 @@ Anything in here
 
 
     name="jo"
-    short_help="Make json objects"
+    help="Make json objects"
     arguments=[{name="pairs", type="str"}]
     inject_values=["pairs"]
 
@@ -92,7 +92,7 @@ Anything in here
 [[alias]]
 
 name = "jsonl"
-short_help = "Load jsonlines into python objects"
+help = "Load jsonlines into python objects"
 
 [[alias.stage]]
 
