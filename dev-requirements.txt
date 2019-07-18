@@ -18,14 +18,16 @@ click==7.0                # via black, cuvner, towncrier
 coverage==4.5.3
 cuvner==18.0.1
 docutils==0.14
+entrypoints==0.3          # via flake8
 filelock==3.0.12          # via tox
+flake8==3.7.8
 importlib-metadata==0.18  # via pluggy, pytest, tox
 incremental==17.5.0       # via cuvner, towncrier
 isort==4.3.21
 jinja2==2.10.1            # via towncrier
 lazy-object-proxy==1.4.1  # via astroid
 markupsafe==1.1.1         # via jinja2
-mccabe==0.6.1             # via pylint
+mccabe==0.6.1             # via flake8, pylint
 more-itertools==7.1.0     # via pytest
 mypy-extensions==0.4.1    # via mypy
 mypy==0.720
@@ -34,6 +36,8 @@ pathtools==0.1.2          # via watchdog
 pex==1.6.8
 pluggy==0.12.0            # via pytest, tox
 py==1.8.0                 # via pytest, tox
+pycodestyle==2.5.0        # via flake8
+pyflakes==2.1.1           # via flake8
 pygments==2.4.2
 pylint==2.3.1
 pyparsing==2.4.0          # via packaging
