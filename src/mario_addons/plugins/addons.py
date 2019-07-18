@@ -7,8 +7,6 @@ from mario import plug
 
 
 registry = plug.make_plugin_aliases_registry("mario_addons.plugins")
-print(registry)
-# TODO Add test cases in the toml.
 
 
 def read_csv(

@@ -6,9 +6,16 @@
     short_help = "Convert yaml to json"
 
     [[alias.stage]]
-
     command = "stack"
     options = {code="yaml.safe_load ! json.dumps"}
+
+    [[alias.test_spec]]
+    invocation = ["yml2json"]
+    input = '''{"x": 1,}
+'''
+    output = '''{"x": 1}
+'''
+
 
 ### Search for xpath elements with xpath
 
@@ -25,6 +32,22 @@
 
     [[alias.stage]]
     command="chain"
+
+
+    [[alias.test_spec]]
+    invocation = ["xpath", "//", "map", "x.text"]
+    input = """
+          <slide type="all">
+            <title>Overview</title>
+              <item>Anything in here</item>
+          </slide>
+"""
+     output = """
+Overview
+Anything in here
+"""
+
+
 
 ### Generate json objects
 
@@ -58,6 +81,12 @@
     [[alias.stage]]
     command = "map"
     options = {code="json.dumps"}
+
+
+    [[alias.test_spec]]
+    invocation = ["jo", "x=1 y=2"]
+    input = ""
+    output = "{\"x\": 1, \"y\": 2}\n"
 
 
 [[alias]]
@@ -97,3 +126,15 @@ options =  {code="json.loads"}
     [[alias.stage]]
     command = "map"
     options = {code="dict(x)"}
+
+    [[alias.test_spec]]
+    invocation = ["csv"]
+    input = """
+name,age
+Alice,21
+Bob,22
+"""
+output = """
+{'name': 'Alice', 'age': '21'}
+{'name': 'Bob', 'age': '22'}
+"""
