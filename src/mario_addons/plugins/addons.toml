@@ -91,14 +91,19 @@ Anything in here
 
 [[alias]]
 
-name = "jsonl"
-help = "Load jsonlines into python objects"
+    name = "jsonl"
+    help = "Load jsonlines into python objects"
 
-[[alias.stage]]
+    [[alias.stage]]
 
-command = "map"
+    command = "map"
 
-options =  {code="json.loads"}
+    options =  {code="json.loads"}
+
+    [[alias.test_spec]]
+    invocation = ["jsonl"]
+    input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
+    output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
 
 
 [[alias]]
@@ -129,12 +134,5 @@ options =  {code="json.loads"}
 
     [[alias.test_spec]]
     invocation = ["csv"]
-    input = """
-name,age
-Alice,21
-Bob,22
-"""
-output = """
-{'name': 'Alice', 'age': '21'}
-{'name': 'Bob', 'age': '22'}
-"""
+    input = """name,age\nAlice,21\nBob,22\n"""
+    output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
