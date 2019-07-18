@@ -48,7 +48,7 @@ To set up `mario-addons` for local development:
     git checkout -b name-of-your-bugfix-or-feature
 
  Now you can make your changes locally. To add a new command, edit ``addons.toml`` or ``addons.py``.
- Make sure to add tests and docs for your changes.
+ Make sure to add tests and usage docs for your changes.
 
 4. When you're done making changes, run all the checks, doc builder and spell checker with `tox <http://tox.readthedocs.io/en/latest/install.html>`_ one command::
 
