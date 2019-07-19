@@ -15,7 +15,7 @@ click==7.0                # via mario
 h11==0.9.0                # via asks
 idna==2.8                 # via trio
 lxml==4.3.4
-mario==0.0.121
+mario==0.0.122
 marshmallow==3.0.0rc8     # via mario
 mypy-extensions==0.4.1    # via mypy, trio-typing
 mypy==0.720               # via trio-typing
