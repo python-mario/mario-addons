@@ -3,8 +3,8 @@ Usage
 =====
 
 
-``csv``
-=======
+``read-csv``
+==============
 
 Read a csv file into Python dicts. Given a csv like this:
 
@@ -19,7 +19,7 @@ try:
 
 .. code-block:: bash
 
-    $ mario csv <<EOF
+    $ mario read-csv <<EOF
     name,age
     Alice,21
     Bob,25
@@ -43,23 +43,23 @@ Create json objects with a simple syntax.
     {"name": "Alice", "age": 21, "hobbies": ["running"]}
 
 
-``jsonl``
-=========
+``read-jsonl``
+=================
 
 Read line-separated json.
 
 .. code-block:: bash
 
-    $ mario jsonl  <<< $'{"a":1, "b":2}\n{"a": 5, "b":9}'
+    $ mario read-jsonl  <<< $'{"a":1, "b":2}\n{"a": 5, "b":9}'
     {'a': 1, 'b': 2}
     {'a': 5, 'b': 9}
 
 
-The new command ``jsonl`` can be used in pipelines as well. To get the maximum value in a sequence of jsonlines objects:
+The new command ``read-jsonl`` can be used in pipelines as well. To get the maximum value in a sequence of jsonlines objects:
 
 .. code-block:: bash
 
-   $ mario jsonl map 'x["a"]' apply max <<< $'{"a":1, "b":2}\n{"a": 5, "b":9}'
+   $ mario read-jsonl map 'x["a"]' apply max <<< $'{"a":1, "b":2}\n{"a": 5, "b":9}'
    5
 
 

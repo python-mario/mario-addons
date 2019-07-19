@@ -185,4 +185,4 @@ options={code="toml.dumps"}
 invocation = ["stack", "json.loads", "write-toml"]
 input = '''{"x": 1}
 '''
-output = """x = 1\n"""
+output = """x = 1\n\n"""
