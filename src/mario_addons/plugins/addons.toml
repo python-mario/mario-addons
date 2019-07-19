@@ -9,7 +9,7 @@
     command = "stack"
     options = {code="yaml.safe_load ! json.dumps"}
 
-    [[alias.test_spec]]
+    [[alias.test]]
     invocation = ["yml2json"]
     input = '''{"x": 1,}
 '''
@@ -34,7 +34,7 @@
     command="chain"
 
 
-    [[alias.test_spec]]
+    [[alias.test]]
     invocation = ["xpath", "//", "map", "x.text"]
     input = """
           <slide type="all">
@@ -58,6 +58,7 @@ Anything in here
     help="Make json objects"
     arguments=[{name="pairs", type="str"}]
     inject_values=["pairs"]
+
 
     [[alias.stage]]
     command = "eval"
@@ -83,7 +84,7 @@ Anything in here
     options = {code="json.dumps"}
 
 
-    [[alias.test_spec]]
+    [[alias.test]]
     invocation = ["jo", "x=1 y=2"]
     input = ""
     output = "{\"x\": 1, \"y\": 2}\n"
@@ -91,8 +92,9 @@ Anything in here
 
 [[alias]]
 
-    name = "jsonl"
+    name = "read-jsonl"
     help = "Load jsonlines into python objects"
+    section ="Read"
 
     [[alias.stage]]
 
@@ -100,16 +102,17 @@ Anything in here
 
     options =  {code="json.loads"}
 
-    [[alias.test_spec]]
-    invocation = ["jsonl"]
+    [[alias.test]]
+    invocation = ["read-jsonl"]
     input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
     output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
 
 
 [[alias]]
-    name = "csv"
+    name = "read-csv"
     help = "Load csv rows into python objects"
     inject_values=["delimiter", "header"]
+    section ="Read"
 
     [[alias.options]]
     name = "--delimiter"
@@ -132,7 +135,54 @@ Anything in here
     command = "map"
     options = {code="dict(x)"}
 
-    [[alias.test_spec]]
-    invocation = ["csv"]
+    [[alias.test]]
+    invocation = ["read-csv"]
     input = """name,age\nAlice,21\nBob,22\n"""
     output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
+
+
+[[alias]]
+name = "read-yaml"
+help = "Read yaml document"
+section = "Read"
+
+[[alias.stage]]
+command = "stack"
+options = {code="yaml.safe_load"}
+
+[[alias.test]]
+invocation = ["read-yaml"]
+input = "{'x': 1,}\n"
+output = "{'x': 1}\n"
+
+[[alias]]
+name = 'write-json'
+help = "Write json document"
+section = "Write"
+
+[[alias.stage]]
+command = "apply"
+options={code="json.dumps"}
+
+[[alias.test]]
+invocation = ["stack", "str.split", "write-json"]
+input = "1 2\n"
+output ="[[\"1\", \"2\"]]\n"
+
+
+
+
+[[alias]]
+name = 'write-toml'
+help = "Write toml document"
+section = "Write"
+
+[[alias.stage]]
+command = "map"
+options={code="toml.dumps"}
+
+[[alias.test]]
+invocation = ["stack", "json.loads", "write-toml"]
+input = '''{"x": 1}
+'''
+output = """x = 1\n"""
