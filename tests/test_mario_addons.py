@@ -1,19 +1,19 @@
 import subprocess
 import sys
 
-import mario.aliasing
+import mario.declarative
 import pytest
 
 import mario_addons.plugins.addons
 
 
-ALIASES = mario_addons.plugins.addons.registry.aliases.values()
+ALIASES = mario_addons.plugins.addons.registry.commands.values()
 
-SPECS = [spec for alias in ALIASES for spec in alias.test_specs]
+SPECS = [spec for command in ALIASES for spec in command.test_specs]
 
 
 @pytest.mark.parametrize("test_spec", SPECS)
-def test_alias_test_spec(test_spec: mario.aliasing.AliasTestSpec):
+def test_command_test_spec(test_spec: mario.declarative.CommandTestSpec):
     """The invocation and input generate the expected output."""
 
     output = subprocess.check_output(
@@ -23,7 +23,7 @@ def test_alias_test_spec(test_spec: mario.aliasing.AliasTestSpec):
     assert output == test_spec.output
 
 
-@pytest.mark.parametrize("alias", ALIASES)
-def test_alias_has_test(alias):
-    """All aliases must have at least one test."""
-    assert alias.test_specs
+@pytest.mark.parametrize("command", ALIASES)
+def test_command_has_test(command):
+    """All commands must have at least one test."""
+    assert command.test_specs

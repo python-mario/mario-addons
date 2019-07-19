@@ -1,15 +1,15 @@
 ### Convert yaml to json
 
-[[alias]]
+[[command]]
 
 name = "yml2json"
 short_help = "Convert yaml to json"
 
-[[alias.stage]]
+[[command.stage]]
 command = "stack"
 options = {code="yaml.safe_load ! json.dumps"}
 
-[[alias.test]]
+[[command.test]]
 invocation = ["yml2json"]
 input = '''{"x": 1,}
 '''
@@ -19,22 +19,25 @@ output = '''{"x": 1}
 
 ### Search for xpath elements with xpath
 
-[[alias]]
+[[command]]
 name="xpath"
 short_help = "Find xml elements matching xpath query."
 arguments = [{name="query", type="str"}]
 inject_values=["query"]
 
-[[alias.stage]]
+
+help = """Pull data out of xml documents using xpath."""
+
+[[command.stage]]
 
 command = "stack"
 options= {code="x.encode() ! io.BytesIO ! lxml.etree.parse ! x.findall(query) ! map(lambda y: y, x) ! list" }
 
-[[alias.stage]]
+[[command.stage]]
 command="chain"
 
 
-[[alias.test]]
+[[command.test]]
 invocation = ["xpath", "//", "map", "x.text"]
 input = '''
 <slide type="all">
@@ -51,132 +54,132 @@ Anything in here
 
 ### Generate json objects
 
-[[alias]]
+[[command]]
 name="jo"
 short_help="Make json objects"
 arguments=[{name="pairs", type="str"}]
 inject_values=["pairs"]
 
 
-[[alias.stage]]
+[[command.stage]]
 command = "eval"
 options = {code="pairs"}
 
-[[alias.stage]]
+[[command.stage]]
 command = "map"
 options = {code="shlex.split(x, posix=False)"}
 
-[[alias.stage]]
+[[command.stage]]
 command = "chain"
 
-[[alias.stage]]
+[[command.stage]]
 command = "map"
 options = {code="x.partition('=') ! [x[0], ast.literal_eval(re.sub(r'^(?P<value>[A-Za-z]+)$', r'\"\\g<value>\"', x[2]))]"}
 
-[[alias.stage]]
+[[command.stage]]
 command = "apply"
 options = {"code"="dict"}
 
-[[alias.stage]]
+[[command.stage]]
 command = "map"
 options = {code="json.dumps"}
 
 
-[[alias.test]]
+[[command.test]]
 invocation = ["jo", "x=1 y=2"]
 input = ""
 output = "{\"x\": 1, \"y\": 2}\n"
 
 
-[[alias]]
+[[command]]
 name = "read-jsonl"
 short_help = "Load jsonlines into python objects"
 section ="Read"
 
-[[alias.stage]]
+[[command.stage]]
 
 command = "map"
 
 options =  {code="json.loads"}
 
-[[alias.test]]
+[[command.test]]
 invocation = ["read-jsonl"]
 input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
 output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
 
 
-[[alias]]
+[[command]]
 name = "read-csv"
 short_help = "Load csv rows into python objects"
 inject_values=["delimiter", "header"]
 section ="Read"
 
-[[alias.options]]
+[[command.options]]
 name = "--delimiter"
 default = ","
-help = "field delimiter character"
+help = "Field delimiter character"
 
-[[alias.options]]
+[[command.options]]
 name = "--header/--no-header"
 default=true
 help = "Treat the first row as a header?"
 
-[[alias.stage]]
+[[command.stage]]
 command = "apply"
 options = {code="mario_addons.plugins.addons.read_csv(x, header=header)"}
 
-[[alias.stage]]
+[[command.stage]]
 command = "chain"
 
-[[alias.stage]]
+[[command.stage]]
 command = "map"
 options = {code="dict(x)"}
 
-[[alias.test]]
+[[command.test]]
 invocation = ["read-csv"]
 input = """name,age\nAlice,21\nBob,22\n"""
 output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
 
 
-[[alias]]
+[[command]]
 name = "read-yaml"
 short_help = "Read yaml document"
 section = "Read"
 
-[[alias.stage]]
+[[command.stage]]
 command = "stack"
 options = {code="yaml.safe_load"}
 
-[[alias.test]]
+[[command.test]]
 invocation = ["read-yaml"]
 input = "{'x': 1,}\n"
 output = "{'x': 1}\n"
 
-[[alias]]
+[[command]]
 name = 'write-json'
 short_help = "Write json document"
 section = "Write"
 
-[[alias.stage]]
+[[command.stage]]
 command = "apply"
 options={code="json.dumps"}
 
-[[alias.test]]
+[[command.test]]
 invocation = ["stack", "str.split", "write-json"]
 input = "1 2\n"
 output ="[[\"1\", \"2\"]]\n"
 
 
-[[alias]]
+[[command]]
 name = 'write-toml'
 short_help = "Write toml document"
 section = "Write"
 
-[[alias.stage]]
+[[command.stage]]
 command = "map"
 options={code="toml.dumps"}
 
-[[alias.test]]
+[[command.test]]
 invocation = ["stack", "json.loads", "write-toml"]
 input = '''{"x": 1}
 '''
