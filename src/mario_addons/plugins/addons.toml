@@ -2,47 +2,47 @@
 
 [[alias]]
 
-    name = "yml2json"
-    help = "Convert yaml to json"
+name = "yml2json"
+short_help = "Convert yaml to json"
 
-    [[alias.stage]]
-    command = "stack"
-    options = {code="yaml.safe_load ! json.dumps"}
+[[alias.stage]]
+command = "stack"
+options = {code="yaml.safe_load ! json.dumps"}
 
-    [[alias.test]]
-    invocation = ["yml2json"]
-    input = '''{"x": 1,}
+[[alias.test]]
+invocation = ["yml2json"]
+input = '''{"x": 1,}
 '''
-    output = '''{"x": 1}
+output = '''{"x": 1}
 '''
 
 
 ### Search for xpath elements with xpath
 
 [[alias]]
-    name="xpath"
-    help = "Find xml elements matching xpath query."
-    arguments = [{name="query", type="str"}]
-    inject_values=["query"]
+name="xpath"
+short_help = "Find xml elements matching xpath query."
+arguments = [{name="query", type="str"}]
+inject_values=["query"]
 
-    [[alias.stage]]
+[[alias.stage]]
 
-    command = "stack"
-    options= {code="x.encode() ! io.BytesIO ! lxml.etree.parse ! x.findall(query) ! map(lambda y: y, x) ! list" }
+command = "stack"
+options= {code="x.encode() ! io.BytesIO ! lxml.etree.parse ! x.findall(query) ! map(lambda y: y, x) ! list" }
 
-    [[alias.stage]]
-    command="chain"
+[[alias.stage]]
+command="chain"
 
 
-    [[alias.test]]
-    invocation = ["xpath", "//", "map", "x.text"]
-    input = """
-          <slide type="all">
-            <title>Overview</title>
-              <item>Anything in here</item>
-          </slide>
-"""
-     output = """
+[[alias.test]]
+invocation = ["xpath", "//", "map", "x.text"]
+input = '''
+<slide type="all">
+<title>Overview</title>
+<item>Anything in here</item>
+</slide>
+'''
+output = """
 Overview
 Anything in here
 """
@@ -52,98 +52,95 @@ Anything in here
 ### Generate json objects
 
 [[alias]]
+name="jo"
+short_help="Make json objects"
+arguments=[{name="pairs", type="str"}]
+inject_values=["pairs"]
 
 
-    name="jo"
-    help="Make json objects"
-    arguments=[{name="pairs", type="str"}]
-    inject_values=["pairs"]
+[[alias.stage]]
+command = "eval"
+options = {code="pairs"}
+
+[[alias.stage]]
+command = "map"
+options = {code="shlex.split(x, posix=False)"}
+
+[[alias.stage]]
+command = "chain"
+
+[[alias.stage]]
+command = "map"
+options = {code="x.partition('=') ! [x[0], ast.literal_eval(re.sub(r'^(?P<value>[A-Za-z]+)$', r'\"\\g<value>\"', x[2]))]"}
+
+[[alias.stage]]
+command = "apply"
+options = {"code"="dict"}
+
+[[alias.stage]]
+command = "map"
+options = {code="json.dumps"}
 
 
-    [[alias.stage]]
-    command = "eval"
-    options = {code="pairs"}
-
-    [[alias.stage]]
-    command = "map"
-    options = {code="shlex.split(x, posix=False)"}
-
-    [[alias.stage]]
-    command = "chain"
-
-    [[alias.stage]]
-    command = "map"
-    options = {code="x.partition('=') ! [x[0], ast.literal_eval(re.sub(r'^(?P<value>[A-Za-z]+)$', r'\"\\g<value>\"', x[2]))]"}
-
-    [[alias.stage]]
-    command = "apply"
-    options = {"code"="dict"}
-
-    [[alias.stage]]
-    command = "map"
-    options = {code="json.dumps"}
-
-
-    [[alias.test]]
-    invocation = ["jo", "x=1 y=2"]
-    input = ""
-    output = "{\"x\": 1, \"y\": 2}\n"
-
-
-[[alias]]
-
-    name = "read-jsonl"
-    help = "Load jsonlines into python objects"
-    section ="Read"
-
-    [[alias.stage]]
-
-    command = "map"
-
-    options =  {code="json.loads"}
-
-    [[alias.test]]
-    invocation = ["read-jsonl"]
-    input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
-    output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
+[[alias.test]]
+invocation = ["jo", "x=1 y=2"]
+input = ""
+output = "{\"x\": 1, \"y\": 2}\n"
 
 
 [[alias]]
-    name = "read-csv"
-    help = "Load csv rows into python objects"
-    inject_values=["delimiter", "header"]
-    section ="Read"
+name = "read-jsonl"
+short_help = "Load jsonlines into python objects"
+section ="Read"
 
-    [[alias.options]]
-    name = "--delimiter"
-    default = ","
-    help = "field delimiter character"
+[[alias.stage]]
 
-    [[alias.options]]
-    name = "--header/--no-header"
-    default=true
-    help = "Treat the first row as a header?"
+command = "map"
 
-    [[alias.stage]]
-    command = "apply"
-    options = {code="mario_addons.plugins.addons.read_csv(x, header=header)"}
+options =  {code="json.loads"}
 
-    [[alias.stage]]
-    command = "chain"
+[[alias.test]]
+invocation = ["read-jsonl"]
+input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
+output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
 
-    [[alias.stage]]
-    command = "map"
-    options = {code="dict(x)"}
 
-    [[alias.test]]
-    invocation = ["read-csv"]
-    input = """name,age\nAlice,21\nBob,22\n"""
-    output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
+[[alias]]
+name = "read-csv"
+short_help = "Load csv rows into python objects"
+inject_values=["delimiter", "header"]
+section ="Read"
+
+[[alias.options]]
+name = "--delimiter"
+default = ","
+help = "field delimiter character"
+
+[[alias.options]]
+name = "--header/--no-header"
+default=true
+help = "Treat the first row as a header?"
+
+[[alias.stage]]
+command = "apply"
+options = {code="mario_addons.plugins.addons.read_csv(x, header=header)"}
+
+[[alias.stage]]
+command = "chain"
+
+[[alias.stage]]
+command = "map"
+options = {code="dict(x)"}
+
+[[alias.test]]
+invocation = ["read-csv"]
+input = """name,age\nAlice,21\nBob,22\n"""
+output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
 
 
 [[alias]]
 name = "read-yaml"
-help = "Read yaml document"
+short_help = "Read yaml document"
 section = "Read"
 
 [[alias.stage]]
@@ -157,7 +154,7 @@ output = "{'x': 1}\n"
 
 [[alias]]
 name = 'write-json'
-help = "Write json document"
+short_help = "Write json document"
 section = "Write"
 
 [[alias.stage]]
@@ -170,11 +167,9 @@ input = "1 2\n"
 output ="[[\"1\", \"2\"]]\n"
 
 
-
-
 [[alias]]
 name = 'write-toml'
-help = "Write toml document"
+short_help = "Write toml document"
 section = "Write"
 
 [[alias.stage]]
