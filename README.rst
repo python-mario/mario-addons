@@ -60,5 +60,5 @@ Installation
 Documentation
 =============
 
-* Mario: https://mario.readthedocs.io/
+* Mario: https://python-mario.readthedocs.io/
 * Mario addons: https://mario-addons.readthedocs.io/
