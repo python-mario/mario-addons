@@ -7,7 +7,7 @@ short_help = "Convert yaml to json"
 
 [[command.stage]]
 command = "stack"
-options = {code="yaml.safe_load ! json.dumps"}
+params = {code="yaml.safe_load ! json.dumps"}
 
 [[command.test]]
 invocation = ["yml2json"]
@@ -31,7 +31,7 @@ help = """Pull data out of xml documents using xpath."""
 [[command.stage]]
 
 command = "stack"
-options= {code="x.encode() ! io.BytesIO ! lxml.etree.parse ! x.findall(query) ! map(lambda y: y, x) ! list" }
+params = {code="x.encode() ! io.BytesIO ! lxml.etree.parse ! x.findall(query) ! map(lambda y: y, x) ! list" }
 
 [[command.stage]]
 command="chain"
@@ -63,26 +63,26 @@ inject_values=["pairs"]
 
 [[command.stage]]
 command = "eval"
-options = {code="pairs"}
+params = {code="pairs"}
 
 [[command.stage]]
 command = "map"
-options = {code="shlex.split(x, posix=False)"}
+params = {code="shlex.split(x, posix=False)"}
 
 [[command.stage]]
 command = "chain"
 
 [[command.stage]]
 command = "map"
-options = {code="x.partition('=') ! [x[0], ast.literal_eval(re.sub(r'^(?P<value>[A-Za-z]+)$', r'\"\\g<value>\"', x[2]))]"}
+params = {code="x.partition('=') ! [x[0], ast.literal_eval(re.sub(r'^(?P<value>[A-Za-z]+)$', r'\"\\g<value>\"', x[2]))]"}
 
 [[command.stage]]
 command = "apply"
-options = {"code"="dict"}
+params = {"code"="dict"}
 
 [[command.stage]]
 command = "map"
-options = {code="json.dumps"}
+params = {code="json.dumps"}
 
 
 [[command.test]]
@@ -100,7 +100,7 @@ section ="Read"
 
 command = "map"
 
-options =  {code="json.loads"}
+params =  {code="json.loads"}
 
 [[command.test]]
 invocation = ["read-jsonl"]
@@ -110,6 +110,33 @@ output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
 
 [[command]]
 name = "read-csv"
+help = """
+
+Read a csv file into Python dicts. Given a csv like this:
+
+
+.. code-block::
+
+    name,age
+    Alice,21
+    Bob,25
+
+try:
+
+.. code-block:: bash
+
+    $ mario read-csv <<EOF
+    name,age
+    Alice,21
+    Bob,25
+    EOF
+    {'name': 'Alice', 'age': '21'}
+    {'name': 'Bob', 'age': '25'}
+
+
+Specify the ``--delimiter=`` or ``--no-header`` options as needed.
+
+"""
 short_help = "Load csv rows into python objects"
 inject_values=["delimiter", "header"]
 section ="Read"
@@ -126,14 +153,14 @@ help = "Treat the first row as a header?"
 
 [[command.stage]]
 command = "apply"
-options = {code="mario_addons.plugins.addons.read_csv(x, header=header)"}
+params = {code="mario_addons.plugins.addons.read_csv(x, header=header)"}
 
 [[command.stage]]
 command = "chain"
 
 [[command.stage]]
 command = "map"
-options = {code="dict(x)"}
+params = {code="dict(x)"}
 
 [[command.test]]
 invocation = ["read-csv"]
@@ -148,7 +175,7 @@ section = "Read"
 
 [[command.stage]]
 command = "stack"
-options = {code="yaml.safe_load"}
+params = {code="yaml.safe_load"}
 
 [[command.test]]
 invocation = ["read-yaml"]
@@ -162,7 +189,7 @@ section = "Write"
 
 [[command.stage]]
 command = "apply"
-options={code="json.dumps"}
+params ={code="json.dumps"}
 
 [[command.test]]
 invocation = ["stack", "str.split", "write-json"]
@@ -177,7 +204,7 @@ section = "Write"
 
 [[command.stage]]
 command = "map"
-options={code="toml.dumps"}
+params ={code="toml.dumps"}
 
 [[command.test]]
 invocation = ["stack", "json.loads", "write-toml"]

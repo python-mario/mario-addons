@@ -16,6 +16,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
+    "mario.sphinx_click",
 ]
 if os.getenv("SPELLCHECK"):
     extensions += ("sphinxcontrib.spelling",)
@@ -28,7 +29,7 @@ project = "mario_addons"
 year = "2019"
 author = "Mario contributors"
 copyright = "{0}, {1}".format(year, author)
-version = release = "0.1.3"
+version = release = "0.1.5"
 
 pygments_style = "trac"
 templates_path = ["."]
