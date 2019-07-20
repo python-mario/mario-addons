@@ -9,6 +9,7 @@ Contents
    installation
    usage
    reference/index
+   cli_reference
    contributing
    authors
    changelog

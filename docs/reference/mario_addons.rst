@@ -1,9 +1,17 @@
-mario_addons
-============
+mario\_addons package
+=====================
 
-.. testsetup::
+Subpackages
+-----------
 
-    from mario_addons import *
+.. toctree::
+
+   mario_addons.plugins
+
+Module contents
+---------------
 
 .. automodule:: mario_addons
-    :members:
+   :members:
+   :undoc-members:
+   :show-inheritance:

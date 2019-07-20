@@ -24,7 +24,7 @@ flake8==3.7.8
 importlib-metadata==0.18  # via pluggy, pytest, tox
 incremental==17.5.0       # via cuvner, towncrier
 isort==4.3.21
-jinja2==2.10.1            # via towncrier
+jinja2==2.10.1
 lazy-object-proxy==1.4.1  # via astroid
 markupsafe==1.1.1         # via jinja2
 mccabe==0.6.1             # via flake8, pylint
