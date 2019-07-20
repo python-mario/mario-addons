@@ -14,7 +14,7 @@ Overview
         |
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
-        | |commits-since|
+
 
 .. |docs| image:: https://readthedocs.org/projects/mario-addons/badge/?style=flat
     :target: https://readthedocs.org/projects/mario-addons
