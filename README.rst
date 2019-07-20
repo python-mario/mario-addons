@@ -60,5 +60,5 @@ Installation
 Documentation
 =============
 
-
+* https://mario.readthedocs.io/
 * https://mario-addons.readthedocs.io/
