@@ -8,8 +8,8 @@ Contents
    readme
    installation
    usage
-   reference/index
    cli_reference
+   reference/index
    contributing
    authors
    changelog
