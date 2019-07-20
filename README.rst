@@ -21,9 +21,9 @@ Overview
     :alt: Documentation Status
 
 
-.. |travis| image:: https://travis-ci.org/python-mario/mario-addons.svg?branch=master
+.. |travis| image:: https://travis-ci.com/python-mario/mario-addons.svg?branch=master
     :alt: Travis-CI Build Status
-    :target: https://travis-ci.org/python-mario/mario-addons
+    :target: https://travis-ci.com/python-mario/mario-addons
 
 
 .. |version| image:: https://img.shields.io/pypi/v/mario-addons.svg
