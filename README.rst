@@ -60,5 +60,5 @@ Installation
 Documentation
 =============
 
-
-* https://mario-addons.readthedocs.io/
+* Mario: https://mario.readthedocs.io/
+* Mario addons: https://mario-addons.readthedocs.io/
