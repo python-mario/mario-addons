@@ -14,7 +14,7 @@ Overview
         |
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
-        | |commits-since|
+
 
 .. |docs| image:: https://readthedocs.org/projects/mario-addons/badge/?style=flat
     :target: https://readthedocs.org/projects/mario-addons
@@ -30,9 +30,6 @@ Overview
     :alt: PyPI Package latest release
     :target: https://pypi.org/pypi/mario-addons
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/python-mario/mario-addons/v0.1.1.svg
-    :alt: Commits since latest release
-    :target: https://github.com/python-mario/mario-addons/compare/v0.1.1...master
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/mario-addons.svg
     :alt: PyPI Wheel
