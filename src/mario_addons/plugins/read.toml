@@ -1,0 +1,206 @@
+[[command]]
+name = "read-toml"
+short_help = "Read toml document"
+section = "Read"
+
+help = """
+
+Read a toml document into a Python object.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-toml  <<EOF
+    [[persons]]
+    name = "Alice"
+    age = 21
+
+    [[persons]]
+    name = "Bob"
+    age = 22
+    EOF
+    {'persons': [{'name': 'Alice', 'age': 21}, {'name': 'Bob', 'age': 22}]}
+
+"""
+
+[[command.stages]]
+command = "stack"
+params = {code="toml.loads"}
+
+[[command.tests]]
+invocation = ["read-toml"]
+input = """
+[[persons]]
+name = "Alice"
+age = 21
+
+[[persons]]
+name = "Bob"
+age = 22
+"""
+output = "{'persons': [{'name': 'Alice', 'age': 21}, {'name': 'Bob', 'age': 22}]}\n"
+
+[[command]]
+name = "read-yaml"
+short_help = "Read yaml document"
+section = "Read"
+
+help = """
+
+Read a yaml document into a Python object.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-yaml <<EOF
+    - Cat: "foo"
+    - Dog: "bar"
+    - Goldfish: "baz"
+    EOF
+    [{'Cat': 'foo'}, {'Dog': 'bar'}, {'Goldfish': 'baz'}]
+
+"""
+
+[[command.stages]]
+command = "stack"
+params = {code="yaml.safe_load"}
+
+[[command.tests]]
+invocation = ["read-yaml"]
+input = "{'x': 1,}\n"
+output = "{'x': 1}\n"
+
+
+[[command]]
+name = "read-csv"
+section = "Read"
+help = """
+
+Read a csv file into Python dicts. Given a csv like this:
+
+
+.. code-block::
+
+    name,age
+    Alice,21
+    Bob,25
+
+try:
+
+.. code-block:: bash
+
+    $ mario read-csv <<EOF
+    name,age
+    Alice,21
+    Bob,25
+    EOF
+    {'name': 'Alice', 'age': '21'}
+    {'name': 'Bob', 'age': '25'}
+
+
+Specify the ``--delimiter=`` or ``--no-header`` options as needed.
+
+"""
+short_help = "Load csv rows into python objects"
+inject_values=["delimiter", "header"]
+
+
+[[command.options]]
+name = "--delimiter"
+default = ","
+help = "Field delimiter character"
+
+[[command.options]]
+name = "--header/--no-header"
+default=true
+help = "Treat the first row as a header?"
+
+[[command.stages]]
+command = "apply"
+params = {code="mario_addons.plugins.read.read_csv(x, header=header)"}
+
+[[command.stages]]
+command = "chain"
+
+[[command.stages]]
+command = "map"
+params = {code="dict(x)"}
+
+[[command.tests]]
+invocation = ["read-csv"]
+input = """name,age\nAlice,21\nBob,22\n"""
+output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
+
+
+[[command]]
+name = "read-json"
+short_help = "Read json into Python objects"
+section ="Read"
+
+help = """
+
+Read a single json string into a Python object.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-json  <<EOF
+    [
+        {"name": "Alice", "age": 21},
+        {"name": "Bob", "age": 22}
+    ]
+    EOF
+    [{'name': 'Alice', 'age': 21}, {'name': 'Bob', 'age': 22}]
+
+
+"""
+
+[[command.stages]]
+
+command = "stack"
+
+params =  {code="json.loads"}
+
+[[command.tests]]
+invocation = ["read-jsonl"]
+input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
+output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
+
+
+
+[[command]]
+name = "read-jsonl"
+short_help = "Read jsonlines into Python objects"
+section ="Read"
+
+help = """
+
+Read a sequence of json entities into Python objects.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-jsonl  <<EOF
+    {"a":1, "b":2}
+    {"a": 5, "b":9}
+    EOF
+    {'a': 1, 'b': 2}
+    {'a': 5, 'b': 9}
+
+
+"""
+
+[[command.stages]]
+
+command = "map"
+
+params =  {code="json.loads"}
+
+[[command.tests]]
+invocation = ["read-jsonl"]
+input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
+output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""

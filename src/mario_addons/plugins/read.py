@@ -1,11 +1,6 @@
 import csv
 import typing as t
 
-from mario import plug
-
-
-registry = plug.make_plugin_commands_registry("mario_addons.plugins")
-
 
 def read_csv(
     file, header: bool, **kwargs

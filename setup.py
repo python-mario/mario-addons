@@ -81,5 +81,5 @@ setup(
         #   "rst": ["docutils>=0.11"],
         #   ":python_version=="2.6"": ["argparse"],
     },
-    entry_points={"mario_plugins": "addons = mario_addons.plugins"},
+    entry_points={"mario_plugins": "plugins = mario_addons"},
 )

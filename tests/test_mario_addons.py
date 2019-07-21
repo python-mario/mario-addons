@@ -6,10 +6,10 @@ import attr
 import mario.declarative
 import pytest
 
-import mario_addons.plugins.addons
+import mario_addons.plugins
 
 
-COMMANDS = mario_addons.plugins.addons.registry.commands.values()
+COMMANDS = mario_addons.plugins.registry.commands.values()
 TEST_SPECS = [test_spec for command in COMMANDS for test_spec in command.tests]
 REQUIRED_FIELDS = ["tests", "help", "short_help"]
 
