@@ -5,11 +5,11 @@
 name = "yml2json"
 short_help = "Convert yaml to json"
 
-[[command.stage]]
+[[command.stages]]
 command = "stack"
 params = {code="yaml.safe_load ! json.dumps"}
 
-[[command.test]]
+[[command.tests]]
 invocation = ["yml2json"]
 input = '''{"x": 1,}
 '''
@@ -28,16 +28,16 @@ inject_values=["query"]
 
 help = """Pull data out of xml documents using xpath."""
 
-[[command.stage]]
+[[command.stages]]
 
 command = "stack"
 params = {code="x.encode() ! io.BytesIO ! lxml.etree.parse ! x.findall(query) ! map(lambda y: y, x) ! list" }
 
-[[command.stage]]
+[[command.stages]]
 command="chain"
 
 
-[[command.test]]
+[[command.tests]]
 invocation = ["xpath", "//", "map", "x.text"]
 input = '''
 <slide type="all">
@@ -61,31 +61,31 @@ arguments=[{name="pairs", type="str"}]
 inject_values=["pairs"]
 
 
-[[command.stage]]
+[[command.stages]]
 command = "eval"
 params = {code="pairs"}
 
-[[command.stage]]
+[[command.stages]]
 command = "map"
 params = {code="shlex.split(x, posix=False)"}
 
-[[command.stage]]
+[[command.stages]]
 command = "chain"
 
-[[command.stage]]
+[[command.stages]]
 command = "map"
 params = {code="x.partition('=') ! [x[0], ast.literal_eval(re.sub(r'^(?P<value>[A-Za-z]+)$', r'\"\\g<value>\"', x[2]))]"}
 
-[[command.stage]]
+[[command.stages]]
 command = "apply"
 params = {"code"="dict"}
 
-[[command.stage]]
+[[command.stages]]
 command = "map"
 params = {code="json.dumps"}
 
 
-[[command.test]]
+[[command.tests]]
 invocation = ["jo", "x=1 y=2"]
 input = ""
 output = "{\"x\": 1, \"y\": 2}\n"
@@ -96,13 +96,13 @@ name = "read-jsonl"
 short_help = "Load jsonlines into python objects"
 section ="Read"
 
-[[command.stage]]
+[[command.stages]]
 
 command = "map"
 
 params =  {code="json.loads"}
 
-[[command.test]]
+[[command.tests]]
 invocation = ["read-jsonl"]
 input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
 output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
@@ -151,18 +151,18 @@ name = "--header/--no-header"
 default=true
 help = "Treat the first row as a header?"
 
-[[command.stage]]
+[[command.stages]]
 command = "apply"
 params = {code="mario_addons.plugins.addons.read_csv(x, header=header)"}
 
-[[command.stage]]
+[[command.stages]]
 command = "chain"
 
-[[command.stage]]
+[[command.stages]]
 command = "map"
 params = {code="dict(x)"}
 
-[[command.test]]
+[[command.tests]]
 invocation = ["read-csv"]
 input = """name,age\nAlice,21\nBob,22\n"""
 output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
@@ -173,11 +173,11 @@ name = "read-yaml"
 short_help = "Read yaml document"
 section = "Read"
 
-[[command.stage]]
+[[command.stages]]
 command = "stack"
 params = {code="yaml.safe_load"}
 
-[[command.test]]
+[[command.tests]]
 invocation = ["read-yaml"]
 input = "{'x': 1,}\n"
 output = "{'x': 1}\n"
@@ -187,11 +187,11 @@ name = 'write-json'
 short_help = "Write json document"
 section = "Write"
 
-[[command.stage]]
+[[command.stages]]
 command = "apply"
 params ={code="json.dumps"}
 
-[[command.test]]
+[[command.tests]]
 invocation = ["stack", "str.split", "write-json"]
 input = "1 2\n"
 output ="[[\"1\", \"2\"]]\n"
@@ -202,11 +202,11 @@ name = 'write-toml'
 short_help = "Write toml document"
 section = "Write"
 
-[[command.stage]]
+[[command.stages]]
 command = "map"
 params ={code="toml.dumps"}
 
-[[command.test]]
+[[command.tests]]
 invocation = ["stack", "json.loads", "write-toml"]
 input = '''{"x": 1}
 '''
