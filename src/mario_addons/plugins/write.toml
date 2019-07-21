@@ -1,0 +1,113 @@
+[[command]]
+name = 'write-toml'
+short_help = "Write toml document"
+section = "Write"
+help = """
+Write each input item to its toml representation.
+
+For example,
+
+.. code-block::
+
+
+    $ mario read-json write-toml <<EOF
+    {
+        "persons": [
+            {
+                "name": "Alice",
+                "age": 21
+            },
+            {
+                "name": "Bob",
+                "age": 22
+            }
+        ]
+    }
+    EOF
+    [[persons]]
+    name = "Alice"
+    age = 21
+
+    [[persons]]
+    name = "Bob"
+    age = 22
+
+
+"""
+
+[[command.stages]]
+command = "map"
+params ={code="toml.dumps"}
+
+[[command.tests]]
+invocation = ["stack", "json.loads", "write-toml"]
+input = '''{"x": 1}
+'''
+output = """x = 1\n\n"""
+
+
+
+[[command]]
+name = 'write-json'
+short_help = "Write json document"
+section = "Write"
+
+help = """
+
+Serialize each input item to its json representation.
+
+For example,
+
+.. code-block:: bash
+
+    $mario eval "[1, 2, 'foo']" write-json
+    [1, 2, "foo"]
+
+
+Use the ``--indent`` option to set the indentation level:
+
+.. code-block::
+
+    $ mario read-toml write-json --indent=4 <<EOF
+    [[persons]]
+    name = "Alice"
+    age = 21
+
+    [[persons]]
+    name = "Bob"
+    age = 22
+    EOF
+    {
+        "persons": [
+            {
+                "name": "Alice",
+                "age": 21
+            },
+            {
+                "name": "Bob",
+                "age": 22
+            }
+        ]
+    }
+
+
+"""
+inject_values = ["indent"]
+
+
+[[command.options]]
+name = "--indent"
+type = "int"
+
+[[command.stages]]
+command = "map"
+
+
+
+[command.stages.params]
+code = "json.dumps(x, indent=indent)"
+
+[[command.tests]]
+invocation = ["stack", "str.split", "write-json"]
+input = "1 2\n"
+output ="[\"1\", \"2\"]\n"

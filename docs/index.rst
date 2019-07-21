@@ -7,7 +7,6 @@ Contents
 
    readme
    installation
-   usage
    cli_reference
    reference/index
    contributing
