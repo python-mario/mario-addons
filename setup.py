@@ -33,7 +33,7 @@ except FileNotFoundError:
 # Enable code coverage for C code: we can't use CFLAGS=-coverage in tox.ini, since that may mess with compiling
 setup(
     name="mario-addons",
-    version="0.1.6",
+    version="0.1.7",
     description="More commands for Mario.",
     long_description="%s\n%s"
     % (
