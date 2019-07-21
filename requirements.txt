@@ -10,6 +10,7 @@ appdirs==1.4.3            # via mario
 asks==2.3.5               # via mario
 async-exit-stack==1.0.1   # via mario
 async-generator==1.10     # via anyio, asks, mario, trio
+attr==0.3.1
 attrs==19.1.0             # via mario, outcome, trio
 babel==2.7.0              # via sphinx
 bump2version==0.5.10      # via mario

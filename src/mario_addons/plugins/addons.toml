@@ -1,23 +1,4 @@
-### Convert yaml to json
 
-[[command]]
-
-name = "yml2json"
-short_help = "Convert yaml to json"
-
-[[command.stages]]
-command = "stack"
-params = {code="yaml.safe_load ! json.dumps"}
-
-[[command.tests]]
-invocation = ["yml2json"]
-input = '''{"x": 1,}
-'''
-output = '''{"x": 1}
-'''
-
-
-### Search for xpath elements with xpath
 
 [[command]]
 name="xpath"
@@ -26,7 +7,28 @@ arguments = [{name="query", type="str"}]
 inject_values=["query"]
 
 
-help = """Pull data out of xml documents using xpath."""
+help = """Pull data out of xml documents using xpath.
+
+For example,
+
+.. code-block:: bash
+
+
+    $ mario xpath '//'  map 'x.text' <<EOF
+          <slide type="all">
+            <title>Overview</title>
+              <item>Anything <em>can be</em> in here</item>
+              <item>Or <em>also</em> in here</item>
+          </slide>
+    EOF
+
+    Overview
+    Anything
+    can be
+    Or
+    also
+
+"""
 
 [[command.stages]]
 
@@ -61,6 +63,20 @@ arguments=[{name="pairs", type="str"}]
 inject_values=["pairs"]
 
 
+help = """
+
+Create json objects by providing key=value pairs. The argument should be single-quoted if passed in a shell.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario jo 'name=Alice age=21 hobbies=["running"]'
+    {"name": "Alice", "age": 21, "hobbies": ["running"]}
+
+
+"""
+
 [[command.stages]]
 command = "eval"
 params = {code="pairs"}
@@ -93,12 +109,66 @@ output = "{\"x\": 1, \"y\": 2}\n"
 
 [[command]]
 name = "read-jsonl"
-short_help = "Load jsonlines into python objects"
+short_help = "Read jsonlines into Python objects"
 section ="Read"
+
+help = """
+
+Read a sequence of json entities into Python objects.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-jsonl  <<EOF
+    {"a":1, "b":2}
+    {"a": 5, "b":9}
+    EOF
+    {'a': 1, 'b': 2}
+    {'a': 5, 'b': 9}
+
+
+"""
 
 [[command.stages]]
 
 command = "map"
+
+params =  {code="json.loads"}
+
+[[command.tests]]
+invocation = ["read-jsonl"]
+input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
+output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
+
+
+[[command]]
+name = "read-json"
+short_help = "Read json into Python objects"
+section ="Read"
+
+help = """
+
+Read a single json string into a Python object.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-json  <<EOF
+    [
+        {"name": "Alice", "age": 21},
+        {"name": "Bob", "age": 22}
+    ]
+    EOF
+    [{'name': 'Alice', 'age': 21}, {'name': 'Bob', 'age': 22}]
+
+
+"""
+
+[[command.stages]]
+
+command = "stack"
 
 params =  {code="json.loads"}
 
@@ -173,6 +243,23 @@ name = "read-yaml"
 short_help = "Read yaml document"
 section = "Read"
 
+help = """
+
+Read a yaml document into a Python object.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-yaml <<EOF
+    - Cat: "foo"
+    - Dog: "bar"
+    - Goldfish: "baz"
+    EOF
+    [{'Cat': 'foo'}, {'Dog': 'bar'}, {'Goldfish': 'baz'}]
+
+"""
+
 [[command.stages]]
 command = "stack"
 params = {code="yaml.safe_load"}
@@ -182,25 +269,157 @@ invocation = ["read-yaml"]
 input = "{'x': 1,}\n"
 output = "{'x': 1}\n"
 
+
+
+[[command]]
+name = "read-toml"
+short_help = "Read toml document"
+section = "Read"
+
+help = """
+
+Read a toml document into a Python object.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-toml  <<EOF
+    [[persons]]
+    name = "Alice"
+    age = 21
+
+    [[persons]]
+    name = "Bob"
+    age = 22
+    EOF
+    {'persons': [{'name': 'Alice', 'age': 21}, {'name': 'Bob', 'age': 22}]}
+
+"""
+
+[[command.stages]]
+command = "stack"
+params = {code="toml.loads"}
+
+[[command.tests]]
+invocation = ["read-toml"]
+input = """
+[[persons]]
+name = "Alice"
+age = 21
+
+[[persons]]
+name = "Bob"
+age = 22
+"""
+output = "{'persons': [{'name': 'Alice', 'age': 21}, {'name': 'Bob', 'age': 22}]}\n"
+
+
+
+
 [[command]]
 name = 'write-json'
 short_help = "Write json document"
 section = "Write"
 
+help = """
+
+Serialize each input item to its json representation.
+
+For example,
+
+.. code-block:: bash
+
+    $mario eval "[1, 2, 'foo']" write-json
+    [1, 2, "foo"]
+
+
+Use the ``--indent`` option to set the indentation level:
+
+.. code-block::
+
+    $ mario read-toml write-json --indent=4 <<EOF
+    [[persons]]
+    name = "Alice"
+    age = 21
+
+    [[persons]]
+    name = "Bob"
+    age = 22
+    EOF
+    {
+        "persons": [
+            {
+                "name": "Alice",
+                "age": 21
+            },
+            {
+                "name": "Bob",
+                "age": 22
+            }
+        ]
+    }
+
+
+"""
+inject_values = ["indent"]
+
+
+[[command.options]]
+name = "--indent"
+type = "int"
+
 [[command.stages]]
-command = "apply"
-params ={code="json.dumps"}
+command = "map"
+
+
+
+[command.stages.params]
+code = "json.dumps(x, indent=indent)"
 
 [[command.tests]]
 invocation = ["stack", "str.split", "write-json"]
 input = "1 2\n"
-output ="[[\"1\", \"2\"]]\n"
+output ="[\"1\", \"2\"]\n"
+
 
 
 [[command]]
 name = 'write-toml'
 short_help = "Write toml document"
 section = "Write"
+help = """
+Write each input item to its toml representation.
+
+For example,
+
+.. code-block::
+
+
+    $ mario read-json write-toml <<EOF
+    {
+        "persons": [
+            {
+                "name": "Alice",
+                "age": 21
+            },
+            {
+                "name": "Bob",
+                "age": 22
+            }
+        ]
+    }
+    EOF
+    [[persons]]
+    name = "Alice"
+    age = 21
+
+    [[persons]]
+    name = "Bob"
+    age = 22
+
+
+"""
 
 [[command.stages]]
 command = "map"
