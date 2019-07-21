@@ -27,4 +27,4 @@ def test_command_test_spec(test_spec: mario.declarative.CommandTest):
 @pytest.mark.parametrize("command", ALIASES)
 def test_command_has_test(command):
     """All commands must have at least one test."""
-    assert command.test_specs
+    assert command.tests
