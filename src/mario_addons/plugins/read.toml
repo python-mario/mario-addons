@@ -308,3 +308,59 @@ input = """<?xml version="1.0" encoding="UTF-8"?>
 """
 
 output = "OrderedDict([('message', OrderedDict([('warning', 'Hello World')]))])\n"
+
+
+[[command]]
+name = "read-text"
+section = "Read"
+short_help = "Read a block of text into a string."
+help = """
+Read input lines as a block of text, joining lines with a line separator.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-text <<EOF
+    Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit,
+    EOF
+    Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit,
+
+.. code-block:: bash
+
+    $ mario read-text map len <<EOF
+    Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit,
+    EOF
+    56
+
+"""
+
+[[command.options]]
+name = "--sep"
+default = "\n"
+
+[[command.stages]]
+command = "apply"
+params={code="sep.join(x)"}
+
+[[command.tests]]
+invocation = ["read-text"]
+input = """
+Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+"""
+output = """
+Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+"""
+
+[[command.tests]]
+invocation = ["read-text", "map", "len"]
+input = """
+Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+"""
+output = "56"
