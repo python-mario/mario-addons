@@ -65,7 +65,7 @@ For example,
 
 [[command.stages]]
 command = "stack"
-params = {code="yaml.safe_load"}
+params = {code="yaml.safe_load(x)"}
 
 [[command.tests]]
 invocation = ["read-yaml"]
@@ -74,7 +74,7 @@ output = "{'x': 1}\n"
 
 
 [[command]]
-name = "read-csv"
+name = "read-csv-dicts"
 section = "Read"
 help = """
 
@@ -85,32 +85,33 @@ Read a csv file into Python dicts. Given a csv like this:
 
     name,age
     Alice,21
-    Bob,25
+    Bob,22
 
 try:
 
 .. code-block:: bash
 
-    $ mario read-csv <<EOF
+    $ mario read-csv-dicts <<EOF
     name,age
     Alice,21
-    Bob,25
+    Bob,22
     EOF
     {'name': 'Alice', 'age': '21'}
-    {'name': 'Bob', 'age': '25'}
+    {'name': 'Bob', 'age': '22'}
 
 
-Specify the ``--delimiter=`` or ``--no-header`` options as needed.
+
 
 """
 short_help = "Load csv rows into python objects"
-inject_values=["delimiter", "header"]
+inject_values=["dialect", "header"]
 
 
 [[command.options]]
-name = "--delimiter"
-default = ","
-help = "Field delimiter character"
+name = "--dialect"
+help = "CSV dialect"
+choices = ["excel", "excel-tab", "unix"]
+default = "excel"
 
 [[command.options]]
 name = "--header/--no-header"
@@ -119,7 +120,7 @@ help = "Treat the first row as a header?"
 
 [[command.stages]]
 command = "apply"
-params = {code="mario_addons.plugins.read.read_csv(x, header=header)"}
+params = {code="mario_addons.plugins.read.read_csv_dicts(x, header=header, dialect=dialect)"}
 
 [[command.stages]]
 command = "chain"
@@ -129,9 +130,58 @@ command = "map"
 params = {code="dict(x)"}
 
 [[command.tests]]
-invocation = ["read-csv"]
+invocation = ["read-csv-dicts"]
 input = """name,age\nAlice,21\nBob,22\n"""
 output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
+
+
+
+[[command]]
+name = "read-csv-tuples"
+section = "Read"
+help = """
+
+Read a csv file into Python tuples. Given a csv like this:
+
+
+.. code-block::
+
+    name,age
+    Alice,21
+    Bob,22
+
+try:
+
+.. code-block:: bash
+
+    $ mario read-csv-tuples map list <<EOF
+    name,age
+    Alice,21
+    Bob,22
+    EOF
+    [('name', 'age'), ('Alice', '21'), ('Bob', '22')]
+
+"""
+short_help = "Load csv rows into python objects"
+inject_values=["dialect"]
+
+
+[[command.options]]
+name = "--dialect"
+help = "CSV dialect"
+choices = ["excel", "excel-tab", "unix"]
+default = "excel"
+
+
+[[command.stages]]
+command = "apply"
+params = {code="mario_addons.plugins.read.read_csv_tuples(x, dialect=dialect)"}
+
+[[command.tests]]
+invocation = ["read-csv-tuples", "map", "list"]
+input = """name,age\nAlice,21\nBob,22\n"""
+output = "[('name', 'age'), ('Alice', '21'), ('Bob', '22')]\n"
+
 
 
 [[command]]

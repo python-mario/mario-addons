@@ -22,3 +22,4 @@ docshtest
 twine
 pre-commit
 wheel
+pytest-sugar

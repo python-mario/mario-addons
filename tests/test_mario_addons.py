@@ -17,7 +17,7 @@ REQUIRED_FIELDS = ["tests", "help", "short_help"]
 
 def get_param_id(param):
     if attr.has(type(param)):
-        return repr(attr.asdict(param))
+        return repr(attr.asdict(param))[:35]
     return repr(param)
 
 
