@@ -2,3 +2,4 @@ mario==0.0.128
 pyyaml
 lxml
 attr
+xmltodict

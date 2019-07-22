@@ -3,6 +3,7 @@ import subprocess
 import sys
 
 import attr
+import docshtest
 import mario.declarative
 import pytest
 
@@ -36,3 +37,13 @@ def test_command_test_spec(test_spec: mario.declarative.CommandTest):
 def test_command_has_required_fields(command, field_name):
     attribute = getattr(command, field_name)
     assert attribute
+
+
+@pytest.mark.parametrize("command", COMMANDS, ids=get_param_id)
+def test_help(command):
+    """The command help passes docshtest."""
+    lines = command.help.splitlines(keepends=True)
+    for line in lines:
+        if line.startswith(" " * 2) and not line.startswith(" " * 4):
+            raise IndentationError(f"Line starts with 2 spaces and not 4: \n{line}")
+    docshtest.shtest_runner(lines, regex_patterns="")
