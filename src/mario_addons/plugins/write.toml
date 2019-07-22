@@ -10,7 +10,7 @@ For example,
 .. code-block::
 
 
-    $ mario read-json write-toml stack str.rstrip <<EOF
+    $ mario read-json write-toml map str.rstrip <<EOF
     {
         "persons": [
             {
