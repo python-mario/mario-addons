@@ -10,7 +10,7 @@ For example,
 .. code-block::
 
 
-    $ mario read-json write-toml stack str.rstrip <<EOF
+    $ mario read-json write-toml map str.rstrip <<EOF
     {
         "persons": [
             {
@@ -39,7 +39,7 @@ command = "map"
 params ={code="toml.dumps"}
 
 [[command.tests]]
-invocation = ["stack", "json.loads", "write-toml"]
+invocation = ["read-text", "map", "json.loads", "write-toml"]
 input = '''{"x": 1}
 '''
 output = """x = 1\n\n"""
@@ -107,7 +107,7 @@ command = "map"
 code = "json.dumps(x, indent=indent)"
 
 [[command.tests]]
-invocation = ["stack", "str.split", "write-json"]
+invocation = ["read-text", "map", "str.split", "write-json"]
 input = "1 2\n"
 output ="[\"1\", \"2\"]\n"
 
