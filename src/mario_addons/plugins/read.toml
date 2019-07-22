@@ -337,6 +337,7 @@ For example,
     56
 
 """
+inject_values = ["sep"]
 
 [[command.options]]
 name = "--sep"
