@@ -17,11 +17,10 @@ For example,
     $ mario xpath '//'  map 'x.text' <<EOF
           <slide type="all">
             <title>Overview</title>
-              <item>Anything <em>can be</em> in here</item>
-              <item>Or <em>also</em> in here</item>
+              <item>Anything<em>can be</em> in here</item>
+              <item>Or<em>also</em> in here</item>
           </slide>
     EOF
-
     Overview
     Anything
     can be

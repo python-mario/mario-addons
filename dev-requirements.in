@@ -18,3 +18,7 @@ towncrier
 flake8
 pytest-cov
 jinja2
+docshtest
+twine
+pre-commit
+wheel

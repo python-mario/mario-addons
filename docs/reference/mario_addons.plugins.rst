@@ -4,10 +4,10 @@ mario\_addons.plugins package
 Submodules
 ----------
 
-mario\_addons.plugins.addons module
------------------------------------
+mario\_addons.plugins.read module
+---------------------------------
 
-.. automodule:: mario_addons.plugins.addons
+.. automodule:: mario_addons.plugins.read
    :members:
    :undoc-members:
    :show-inheritance:

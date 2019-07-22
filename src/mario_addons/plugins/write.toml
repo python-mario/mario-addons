@@ -10,7 +10,7 @@ For example,
 .. code-block::
 
 
-    $ mario read-json write-toml <<EOF
+    $ mario read-json write-toml stack str.rstrip <<EOF
     {
         "persons": [
             {
@@ -31,7 +31,6 @@ For example,
     [[persons]]
     name = "Bob"
     age = 22
-
 
 """
 
@@ -111,3 +110,39 @@ code = "json.dumps(x, indent=indent)"
 invocation = ["stack", "str.split", "write-json"]
 input = "1 2\n"
 output ="[\"1\", \"2\"]\n"
+
+
+[[command]]
+name = "write-xml"
+section = "Write"
+short_help = "Write a mapping to xml string."
+inject_values = ["pretty"]
+
+help = """
+Write a mapping to xml string.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario eval '{"foo": {"bar": 1}}' write-xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <foo><bar>1</bar></foo>
+
+"""
+
+[[command.options]]
+name = "--pretty/--no-pretty"
+is_flag=true
+default=false
+
+[[command.stages]]
+command = "map"
+params = {code="xmltodict.unparse(x, pretty=pretty)"}
+
+
+[[command.tests]]
+invocation = ["eval", '{"foo": {"bar": 1}}', "write-xml",]
+input = ""
+output = """<?xml version="1.0" encoding="utf-8"?>
+<foo><bar>1</bar></foo>\n"""

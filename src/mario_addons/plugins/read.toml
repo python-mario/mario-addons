@@ -204,3 +204,57 @@ params =  {code="json.loads"}
 invocation = ["read-jsonl"]
 input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
 output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
+
+
+[[command]]
+
+name = "read-xml"
+section = "Read"
+short_help = "Read xml into a Python object."
+
+help = """
+Read xml into a Python object.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-xml <<EOF
+    <?xml version="1.0" encoding="UTF-8"?>
+    <message>
+        <warning>
+             Hello World
+        </warning>
+    </message>
+    EOF
+    OrderedDict([('message', OrderedDict([('warning', 'Hello World')]))])
+
+"""
+
+inject_values = ["process_namespaces"]
+
+[[command.options]]
+
+name = "--process-namespaces"
+type = "bool"
+is_flag=true
+default=false
+
+[[command.stages]]
+
+command = "stack"
+
+params = {code="xmltodict.parse(x, process_namespaces=process_namespaces)"}
+
+[[command.tests]]
+
+invocation = ["read-xml"]
+input = """<?xml version="1.0" encoding="UTF-8"?>
+   <message>
+       <warning>
+            Hello World
+       </warning>
+   </message>
+"""
+
+output = "OrderedDict([('message', OrderedDict([('warning', 'Hello World')]))])\n"
