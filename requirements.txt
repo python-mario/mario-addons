@@ -17,6 +17,7 @@ bump2version==0.5.10      # via mario
 certifi==2019.6.16        # via requests
 chardet==3.0.4            # via requests
 click==7.0                # via mario
+defusedexpat==0.4
 docutils==0.14            # via mario, sphinx
 h11==0.9.0                # via asks
 idna==2.8                 # via requests, trio
