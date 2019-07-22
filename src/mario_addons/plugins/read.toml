@@ -364,4 +364,4 @@ input = """
 Lorem ipsum dolor sit amet,
 consectetur adipiscing elit,
 """
-output = "56"
+output = "56\n"
