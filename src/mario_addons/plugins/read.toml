@@ -25,7 +25,10 @@ For example,
 """
 
 [[command.stages]]
-command = "stack"
+command = "read-text"
+
+[[command.stages]]
+command = "map"
 params = {code="toml.loads"}
 
 [[command.tests]]
@@ -64,7 +67,10 @@ For example,
 """
 
 [[command.stages]]
-command = "stack"
+command = "read-text"
+
+[[command.stages]]
+command = "map"
 params = {code="yaml.safe_load(x)"}
 
 [[command.tests]]
@@ -209,16 +215,16 @@ For example,
 """
 
 [[command.stages]]
+command = "read-text"
 
-command = "stack"
-
+[[command.stages]]
+command = "map"
 params =  {code="json.loads"}
 
 [[command.tests]]
 invocation = ["read-jsonl"]
 input = """{"name": "Alice", "age": "21"}\n{"name": "Bob", "age": "22"}\n"""
 output = """{'name': 'Alice', 'age': '21'}\n{'name': 'Bob', 'age': '22'}\n"""
-
 
 
 [[command]]
@@ -291,13 +297,13 @@ is_flag=true
 default=false
 
 [[command.stages]]
+command = "read-text"
 
-command = "stack"
-
+[[command.stages]]
+command = "map"
 params = {code="xmltodict.parse(x, process_namespaces=process_namespaces)"}
 
 [[command.tests]]
-
 invocation = ["read-xml"]
 input = """<?xml version="1.0" encoding="UTF-8"?>
    <message>
@@ -306,7 +312,6 @@ input = """<?xml version="1.0" encoding="UTF-8"?>
        </warning>
    </message>
 """
-
 output = "OrderedDict([('message', OrderedDict([('warning', 'Hello World')]))])\n"
 
 
