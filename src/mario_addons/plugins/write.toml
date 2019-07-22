@@ -146,3 +146,145 @@ invocation = ["eval", '{"foo": {"bar": 1}}', "write-xml",]
 input = ""
 output = """<?xml version="1.0" encoding="utf-8"?>
 <foo><bar>1</bar></foo>\n"""
+
+
+[[command]]
+name = 'write-csv-dicts'
+section = "Write"
+short_help = "Write a list of dicts to csv"
+inject_values = ["header", "dialect"]
+help = """
+Write a list of dicts to csv.
+
+For example,
+
+.. code-block:: bash
+
+     $ mario read-json write-csv-dicts --no-header <<EOF
+     [
+           {
+               "name": "Alice",
+               "age": 21
+           },
+           {
+               "name": "Bob",
+               "age": 22
+           }
+     ]
+     EOF
+     Alice,21
+     Bob,22
+
+"""
+
+[[command.options]]
+name = "--header/--no-header"
+is_flag = true
+default = true
+help = "Whether to write the dict keys as the first row"
+
+[[command.options]]
+name = "--dialect"
+default = "excel"
+help = "CSV dialect"
+choices = ["excel", "excel-tab", "unix"]
+
+[[command.stages]]
+command = "map"
+params = {code="mario_addons.plugins.write.write_csv_dicts(x, header=header, dialect=dialect)"}
+
+
+[[command.tests]]
+invocation = ["read-json", "write-csv-dicts"]
+input = '''
+[
+      {
+          "name": "Alice",
+          "age": 21
+      },
+      {
+          "name": "Bob",
+          "age": 22
+      }
+]
+'''
+output = """
+name,age\r
+Alice,21\r
+Bob,22\r
+
+"""
+
+
+[[command.tests]]
+invocation = ["read-json", "write-csv-dicts", "--no-header"]
+input = """
+[
+      {
+          "name": "Alice",
+          "age": 21
+      },
+      {
+          "name": "Bob",
+          "age": 22
+      }
+]
+"""
+output = """
+Alice,21\r
+Bob,22\r
+
+"""
+
+[[command]]
+name = 'write-csv-tuples'
+section = "Write"
+short_help = "Write a list of tuples to csv"
+inject_values = ["header", "dialect"]
+help = """
+Write a list of tuples to csv.
+
+For example,
+
+.. code-block:: bash
+
+     $ mario read-json write-csv-tuples  <<EOF
+     [
+             ["name", "age"],
+             ["Alice", 21],
+             ["Bob", 22]
+     ]
+     EOF
+     name,age
+     Alice,21
+     Bob,22
+
+
+"""
+
+
+[[command.options]]
+name = "--dialect"
+default = "excel"
+help = "CSV dialect"
+choices = ["excel", "excel-tab", "unix"]
+
+[[command.stages]]
+command = "map"
+params = {code="mario_addons.plugins.write.write_csv_tuples(x, dialect=dialect)"}
+
+[[command.tests]]
+invocation = ["read-json", "write-csv-tuples"]
+input = """
+[
+            ["name", "age"],
+            ["Alice", 21],
+            ["Bob", 22]
+]
+"""
+output = """
+name,age\r
+Alice,21\r
+Bob,22\r
+
+"""
