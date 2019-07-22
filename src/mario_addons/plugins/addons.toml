@@ -30,8 +30,10 @@ For example,
 """
 
 [[command.stages]]
+command = "read-text"
 
-command = "stack"
+[[command.stages]]
+command = "map"
 params = {code="x.encode() ! io.BytesIO ! lxml.etree.parse ! x.findall(query) ! map(lambda y: y, x) ! list" }
 
 [[command.stages]]
