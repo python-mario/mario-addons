@@ -48,7 +48,7 @@ Overview
 
 Contributed commands for `Mario <https://python-mario.readthedocs.org>`__
 
-* Free software: MIT license
+
 
 Installation
 ============
