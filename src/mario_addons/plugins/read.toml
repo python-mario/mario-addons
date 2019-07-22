@@ -25,7 +25,10 @@ For example,
 """
 
 [[command.stages]]
-command = "stack"
+command = "read-text"
+
+[[command.stages]]
+command = "map"
 params = {code="toml.loads"}
 
 [[command.tests]]
@@ -64,7 +67,10 @@ For example,
 """
 
 [[command.stages]]
-command = "stack"
+command = "read-text"
+
+[[command.stages]]
+command = "map"
 params = {code="yaml.safe_load(x)"}
 
 [[command.tests]]
@@ -209,8 +215,10 @@ For example,
 """
 
 [[command.stages]]
+command = "read-text"
 
-command = "stack"
+[[command.stages]]
+command = "map"
 
 params =  {code="json.loads"}
 
@@ -291,8 +299,10 @@ is_flag=true
 default=false
 
 [[command.stages]]
+command = "read-text"
 
-command = "stack"
+[[command.stages]]
+command = "map"
 
 params = {code="xmltodict.parse(x, process_namespaces=process_namespaces)"}
 
