@@ -5,8 +5,11 @@ import io
 import itertools
 import typing as t
 
+import yaml
+
 
 def write_csv_dicts(rows: t.Iterable[t.Dict], header: bool, dialect: str) -> str:
+    """Write iterable of dicts to csv."""
     file = io.StringIO()
 
     it = iter(rows)
@@ -21,9 +24,16 @@ def write_csv_dicts(rows: t.Iterable[t.Dict], header: bool, dialect: str) -> str
 
 
 def write_csv_tuples(rows: t.Iterable[t.Tuple], dialect: str) -> str:
+    """Write iterable of tuples to csv."""
     file = io.StringIO()
 
     writer = csv.writer(file, dialect)
     writer.writerows(rows)
 
+    return file.getvalue()
+
+
+def write_yaml(data) -> str:
+    file = io.StringIO()
+    yaml.dump(data, file)
     return file.getvalue()

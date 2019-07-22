@@ -288,3 +288,98 @@ Alice,21\r
 Bob,22\r
 
 """
+
+
+[[command]]
+name = "write-jsonl"
+section = "Write"
+short_help = "Write a sequence to newline-separated json."
+help = """
+Write a sequence to newline-separated json.
+
+    $ mario read-json write-jsonl <<EOF
+    [
+            {"name": "Alice", "age": 21},
+            {"name": "Bob", "age": 22}
+    ]
+    EOF
+    {"name": "Alice", "age": 21}
+    {"name": "Bob", "age": 22}
+
+"""
+[[command.stages]]
+command = "chain"
+
+[[command.stages]]
+command = "map"
+params = {code="json.dumps"}
+
+
+[[command.tests]]
+invocation = ["read-json", "write-jsonl"]
+input = """
+    [
+            {"name": "Alice", "age": 21},
+            {"name": "Bob", "age": 22}
+    ]
+"""
+output = """
+{"name": "Alice", "age": 21}
+{"name": "Bob", "age": 22}
+"""
+
+
+[[command]]
+name = "write-yaml"
+section = "Write"
+short_help = "Write a yaml document."
+
+help = """
+.. code-block::
+
+    $ mario read-json write-yaml map str.rstrip  <<EOF
+    [
+            {
+                "name": "Alice",
+                "age": 21
+            },
+            {
+                "name": "Bob",
+                "age": 22
+            }
+    ]
+    EOF
+    - age: 21
+      name: Alice
+    - age: 22
+      name: Bob
+
+
+"""
+
+[[command.stages]]
+command = "map"
+params = {code="mario_addons.plugins.write.write_yaml(x)"}
+
+
+[[command.tests]]
+invocation = ["read-json", "write-yaml",]
+input = """
+    [
+            {
+                "name": "Alice",
+                "age": 21
+            },
+            {
+                "name": "Bob",
+                "age": 22
+            }
+    ]
+"""
+output = """
+- age: 21
+  name: Alice
+- age: 22
+  name: Bob
+
+"""

@@ -65,7 +65,7 @@ For example,
 
 [[command.stages]]
 command = "stack"
-params = {code="yaml.safe_load"}
+params = {code="yaml.safe_load(x)"}
 
 [[command.tests]]
 invocation = ["read-yaml"]
