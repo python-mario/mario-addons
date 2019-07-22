@@ -277,7 +277,7 @@ For example,
         </warning>
     </message>
     EOF
-    OrderedDict([('message', OrderedDict([('warning', 'Hello World')]))])
+    {'message': {'warning': 'Hello World'}}
 
 """
 
@@ -294,7 +294,7 @@ default=false
 
 command = "stack"
 
-params = {code="xmltodict.parse(x, process_namespaces=process_namespaces)"}
+params = {code="xmltodict.parse(x, process_namespaces=process_namespaces, dict_constructor=dict)"}
 
 [[command.tests]]
 
@@ -306,5 +306,4 @@ input = """<?xml version="1.0" encoding="UTF-8"?>
        </warning>
    </message>
 """
-
-output = "OrderedDict([('message', OrderedDict([('warning', 'Hello World')]))])\n"
+output = "{'message': {'warning': 'Hello World'}}\n"
