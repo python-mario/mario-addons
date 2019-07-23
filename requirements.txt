@@ -23,7 +23,7 @@ idna==2.8                 # via requests, trio
 imagesize==1.1.0          # via sphinx
 jinja2==2.10.1            # via sphinx
 lxml==4.3.4
-mario==0.0.131
+mario==0.0.132
 markupsafe==1.1.1         # via jinja2
 marshmallow==3.0.0rc8     # via mario
 mypy-extensions==0.4.1    # via mypy, trio-typing
