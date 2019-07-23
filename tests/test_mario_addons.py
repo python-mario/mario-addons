@@ -1,4 +1,5 @@
-import itertools
+"""Tests for mario addons."""
+
 import subprocess
 import sys
 
@@ -10,12 +11,14 @@ import pytest
 import mario_addons.plugins
 
 
+# pylint: disable=no-member
 COMMANDS = mario_addons.plugins.registry.commands.values()
 TEST_SPECS = [test_spec for command in COMMANDS for test_spec in command.tests]
 REQUIRED_FIELDS = ["tests", "help", "short_help"]
 
 
 def get_param_id(param):
+    """Make a verbose id for a test parameter."""
     if attr.has(type(param)):
         return repr(attr.asdict(param))[:35]
     return repr(param)
@@ -35,6 +38,7 @@ def test_command_test_spec(test_spec: mario.declarative.CommandTest):
 @pytest.mark.parametrize("command", COMMANDS, ids=get_param_id)
 @pytest.mark.parametrize("field_name", REQUIRED_FIELDS, ids=get_param_id)
 def test_command_has_required_fields(command, field_name):
+    """Test that the command has all required fields."""
     attribute = getattr(command, field_name)
     assert attribute
 
