@@ -337,7 +337,10 @@ section = "Write"
 short_help = "Write a yaml document."
 
 help = """
-.. code-block::
+
+Write a yaml document.
+
+.. code-block:: bash
 
     $ mario read-json write-yaml map str.rstrip  <<EOF
     [
