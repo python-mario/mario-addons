@@ -127,14 +127,15 @@ For example,
 
     $ mario eval '{"foo": {"bar": 1}}' write-xml
     <?xml version="1.0" encoding="utf-8"?>
-    <foo><bar>1</bar></foo>
-
+    <foo>
+    \t<bar>1</bar>
+    </foo>
 """
 
 [[command.options]]
 name = "--pretty/--no-pretty"
 is_flag=true
-default=false
+default=true
 
 [[command.stages]]
 command = "map"
@@ -144,8 +145,12 @@ params = {code="xmltodict.unparse(x, pretty=pretty)"}
 [[command.tests]]
 invocation = ["eval", '{"foo": {"bar": 1}}', "write-xml",]
 input = ""
-output = """<?xml version="1.0" encoding="utf-8"?>
-<foo><bar>1</bar></foo>\n"""
+output = """
+<?xml version="1.0" encoding="utf-8"?>
+<foo>
+	<bar>1</bar>
+</foo>
+"""
 
 
 [[command]]
