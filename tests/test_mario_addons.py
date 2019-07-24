@@ -29,7 +29,7 @@ def test_command_test_spec(test_spec: mario.declarative.CommandTest):
     """The invocation and input generate the expected output."""
 
     output = subprocess.check_output(
-        [sys.executable, "-m", "mario"] + test_spec.invocation,
+        [sys.executable, "-m", "mario"] + list(test_spec.invocation),
         input=test_spec.input.encode(),
     ).decode()
     assert output == test_spec.output
