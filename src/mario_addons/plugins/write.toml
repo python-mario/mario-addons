@@ -297,6 +297,8 @@ short_help = "Write a sequence to newline-separated json."
 help = """
 Write a sequence to newline-separated json.
 
+.. code-block:: bash
+
     $ mario read-json write-jsonl <<EOF
     [
             {"name": "Alice", "age": 21},
