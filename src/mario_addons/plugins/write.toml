@@ -59,7 +59,7 @@ For example,
 
 .. code-block:: bash
 
-    $mario eval "[1, 2, 'foo']" write-json
+    $ mario eval "[1, 2, 'foo']" write-json
     [1, 2, "foo"]
 
 
@@ -136,6 +136,7 @@ For example,
 name = "--pretty/--no-pretty"
 is_flag=true
 default=true
+help = "Pretty-print the output"
 
 [[command.stages]]
 command = "map"
@@ -191,7 +192,7 @@ help = "Whether to write the dict keys as the first row"
 [[command.options]]
 name = "--dialect"
 default = "excel"
-help = "CSV dialect"
+help = "CSV dialect (See https://docs.python.org/3/library/csv.html)"
 choices = ["excel", "excel-tab", "unix"]
 
 [[command.stages]]
@@ -271,7 +272,7 @@ For example,
 [[command.options]]
 name = "--dialect"
 default = "excel"
-help = "CSV dialect"
+help = "CSV dialect (See https://docs.python.org/3/library/csv.html)"
 choices = ["excel", "excel-tab", "unix"]
 
 [[command.stages]]

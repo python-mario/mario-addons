@@ -64,8 +64,8 @@ inject_values=["pairs"]
 
 
 help = """
-
-Create json objects by providing key=value pairs. The argument should be single-quoted if passed in a shell.
+[EXPERIMENTAL] Create json objects by providing key=value pairs.
+The argument should be single-quoted if passed in a shell.
 
 For example,
 

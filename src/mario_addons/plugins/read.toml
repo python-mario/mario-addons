@@ -115,9 +115,10 @@ inject_values=["dialect", "header"]
 
 [[command.options]]
 name = "--dialect"
-help = "CSV dialect"
+help = "CSV dialect (See https://docs.python.org/3/library/csv.html)"
 choices = ["excel", "excel-tab", "unix"]
 default = "excel"
+
 
 [[command.options]]
 name = "--header/--no-header"
@@ -174,7 +175,7 @@ inject_values=["dialect"]
 
 [[command.options]]
 name = "--dialect"
-help = "CSV dialect"
+help = "CSV dialect (See https://docs.python.org/3/library/csv.html)"
 choices = ["excel", "excel-tab", "unix"]
 default = "excel"
 
@@ -347,6 +348,7 @@ inject_values = ["sep"]
 [[command.options]]
 name = "--sep"
 default = "\n"
+help = "Separator to join input lines with"
 
 [[command.stages]]
 command = "apply"
