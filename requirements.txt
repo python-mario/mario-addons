@@ -25,7 +25,7 @@ imagesize==1.1.0          # via sphinx
 importlib-metadata==0.18  # via pluggy, pytest
 jinja2==2.10.1            # via sphinx
 lxml==4.3.4
-mario==0.0.136
+mario==0.0.137
 markupsafe==1.1.1         # via jinja2
 marshmallow==3.0.0rc8     # via mario
 more-itertools==7.2.0     # via pytest
