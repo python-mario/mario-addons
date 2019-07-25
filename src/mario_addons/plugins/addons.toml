@@ -57,6 +57,7 @@ Anything in here
 
 [[command]]
 name = "walk-tree"
+section = 'Traversals'
 inject_values=['t']
 short_help = "[EXPERIMENTAL] Walk a tree from the bottom up."
 help = """
