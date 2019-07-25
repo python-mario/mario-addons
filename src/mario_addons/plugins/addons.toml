@@ -52,3 +52,51 @@ output = """
 Overview
 Anything in here
 """
+
+
+
+[[command]]
+name = "walk-tree"
+inject_values=['t']
+short_help = "[EXPERIMENTAL] Walk a tree from the bottom up."
+help = """
+[EXPERIMENTAL] Walk a tree from the bottom up, transforming objects as you go. Note this command uses ``eval`` on the transformer arguments.
+
+For example,
+
+.. code-block:: bash
+
+    $ mario read-json walk-tree  -t'int=x*2' chain write-json  <<EOF
+    [
+            {"name": "Alice", "age": 21},
+            {"name": "Bob", "age": 22}
+    ]
+    EOF
+    [
+        {
+            "name": "Alice",
+            "age": 42
+        },
+        {
+            "name": "Bob",
+            "age": 44
+        }
+    ]
+
+
+
+"""
+[[command.options]]
+name = "-t"
+multiple=true
+help="Transformers for types. Pass a type-function pair. Each instance of the type will be converted with the function. For example, use ``-tdict=collections.OrderedDict`` to convert all ``dict`` objects to ``OrderedDict``. ``eval`` is used on both sides of the ``=``."
+[[command.stages]]
+command = 'apply'
+params = {code="mario_addons.plugins.walking.build_transforming_json_walker(pair_str.split('=', maxsplit=1) for pair_str in t)(x)"}
+
+
+
+[[command.tests]]
+invocation = ["eval", "{'a': {'b': 1, 'c': 3.4}}", "walk-tree", "-t", "int=float", "chain"]
+input = ""
+output = "{'a': {'b': 1.0, 'c': 3.4}}\n"
