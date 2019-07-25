@@ -59,7 +59,7 @@ For example,
 
 .. code-block:: bash
 
-    $ mario eval "[1, 2, 'foo']" write-json
+    $ mario eval "[1, 2, 'foo']" write-json --no-pretty
     [1, 2, "foo"]
 
 
@@ -67,7 +67,7 @@ Use the ``--indent`` option to set the indentation level:
 
 .. code-block::
 
-    $ mario read-toml write-json --indent=4 <<EOF
+    $ mario read-toml write-json --pretty <<EOF
     [[persons]]
     name = "Alice"
     age = 21
@@ -91,23 +91,21 @@ Use the ``--indent`` option to set the indentation level:
 
 
 """
-inject_values = ["indent"]
+inject_values = ["pretty"]
 
 
 [[command.options]]
-name = "--indent"
-type = "int"
+name = "--pretty/--no-pretty"
+default=true
 
 [[command.stages]]
 command = "map"
 
-
-
 [command.stages.params]
-code = "json.dumps(x, indent=indent)"
+code = "json.dumps(x, indent=4 if pretty else None)"
 
 [[command.tests]]
-invocation = ["read-text", "map", "str.split", "write-json"]
+invocation = ["read-text", "map", "str.split", "write-json", "--no-pretty"]
 input = "1 2\n"
 output ="[\"1\", \"2\"]\n"
 
