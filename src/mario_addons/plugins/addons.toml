@@ -90,6 +90,7 @@ For example,
 name = "-t"
 multiple=true
 help="Transformers for types. Pass a type-function pair. Each instance of the type will be converted with the function. For example, use ``-tdict=collections.OrderedDict`` to convert all ``dict`` objects to ``OrderedDict``. ``eval`` is used on both sides of the ``=``."
+
 [[command.stages]]
 command = 'apply'
 params = {code="mario_addons.plugins.walking.build_transforming_json_walker(pair_str.split('=', maxsplit=1) for pair_str in t)(x)"}
