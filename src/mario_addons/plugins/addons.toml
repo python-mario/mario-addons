@@ -56,7 +56,8 @@ Anything in here
 
 
 [[command]]
-name = "walk-tree"
+name = "walk"
+section = 'Traversals'
 inject_values=['t']
 short_help = "[EXPERIMENTAL] Walk a tree from the bottom up."
 help = """
@@ -66,7 +67,7 @@ For example,
 
 .. code-block:: bash
 
-    $ mario read-json walk-tree  -t'int=x*2' write-json  <<EOF
+    $ mario read-json walk -t'int=x*2' write-json  <<EOF
     [
             {"name": "Alice", "age": 21},
             {"name": "Bob", "age": 22}
@@ -98,6 +99,6 @@ params = {code="mario_addons.plugins.walking.build_transforming_json_walker(pair
 
 
 [[command.tests]]
-invocation = ["eval", "{'a': {'b': 1, 'c': 3.4}}", "walk-tree", "-t", "int=float", ]
+invocation = ["eval", "{'a': {'b': 1, 'c': 3.4}}", "walk", "-t", "int=float", ]
 input = ""
 output = "{'a': {'b': 1.0, 'c': 3.4}}\n"
