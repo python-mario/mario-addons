@@ -23,14 +23,9 @@ def read(*names, **kwargs):
         return fh.read()
 
 
-try:
-    with open("requirements.in") as f:
-        INSTALL_REQUIRES = f.read().splitlines()
-except FileNotFoundError:
-    print(sys.exc_info())
-    INSTALL_REQUIRES = []
-
-
+INSTALL_REQUIRES = read("requirements.in").splitlines()
+# Mario is in a *-requirements.txt file so dependabot will see it.
+INSTALL_REQUIRES += read("mario-requirements.txt").splitlines()
 DEV_INSTALL_REQUIRES = read("dev-requirements.txt").splitlines()
 
 
