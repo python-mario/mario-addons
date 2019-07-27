@@ -41,6 +41,8 @@ jobs:
     deploy:
     - provider: script
       script: tox -e release
+      on:
+        branch: release
 
 
 before_install:
