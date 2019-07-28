@@ -29,7 +29,7 @@ project = "mario_addons"
 year = "2019"
 author = "Mario contributors"
 copyright = "{0}, {1}".format(year, author)
-version = release = "0.1.22"
+version = release = "0.1.23"
 
 pygments_style = "trac"
 templates_path = ["."]
