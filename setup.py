@@ -34,7 +34,7 @@ DEV_INSTALL_REQUIRES = read("dev-requirements.txt").splitlines()
 # Enable code coverage for C code: we can't use CFLAGS=-coverage in tox.ini, since that may mess with compiling
 setup(
     name="mario-addons",
-    version="0.1.24",
+    version="0.1.25",
     description="More commands for Mario.",
     long_description="%s\n%s"
     % (
