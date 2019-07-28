@@ -1,6 +1,8 @@
 """Functions for walking a tree."""
 
+import builtins
 import collections.abc
+import importlib
 import typing as t
 
 import mario.interpret
@@ -48,17 +50,53 @@ def make_func(code: str, namespace: t.Dict[str, object]) -> t.Callable:
     return lambda x: eval(code, {**namespace, "x": x})
 
 
+def prefixes(multi_attribute_access: str) -> t.List[str]:
+    """Get prefixes of a namepsaced name.
+
+    >>> prefixes('a.b.c')
+    ['a.b.c', 'a.b', 'a']
+    """
+    split = multi_attribute_access.split(".")
+    out = []
+    while split:
+        out.append(".".join(split))
+        split.pop(-1)
+    return out
+
+
+def get_type_object(namespaced_type_name: str) -> t.Type:
+    """Turns a qualname into the corresponding object."""
+
+    if "." not in namespaced_type_name:
+        return getattr(builtins, namespaced_type_name)
+
+    name_to_module = mario.interpret.build_name_to_module(namespaced_type_name)
+    for module_name in prefixes(namespaced_type_name):
+        module = name_to_module.get(module_name)
+        if module is not None:
+            break
+    else:
+
+        raise ImportError(module_name)
+
+    obj = module
+    remainder = namespaced_type_name[len(module_name) :]
+    names = [name for name in remainder.split(".") if name]
+
+    while names:
+        obj = getattr(obj, names[0])
+        names.pop()
+
+    return obj
+
+
 def build_mapping(pairs: t.Iterable[t.Tuple[str, str]]):
     """Build a type-to-transformer mapping."""
     mapping = {}
 
     for input_type, converter in pairs:
-        input_type_namespace = mario.interpret.build_name_to_module(input_type)
         converter_namespace = mario.interpret.build_name_to_module(converter)
-        # pylint: disable=eval-used
-        mapping[eval(input_type, input_type_namespace)] = make_func(
-            converter, converter_namespace
-        )
+        mapping[get_type_object(input_type)] = make_func(converter, converter_namespace)
     return mapping
 
 

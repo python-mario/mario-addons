@@ -61,7 +61,7 @@ section = 'Traversals'
 inject_values=['t']
 short_help = "[EXPERIMENTAL] Walk a tree from the bottom up."
 help = """
-[EXPERIMENTAL] Walk a tree from the bottom up, transforming objects as you go. Note this command uses ``eval`` on the transformer arguments.
+[EXPERIMENTAL] Walk a tree from the bottom up, transforming objects as you go.
 
 For example,
 
@@ -90,7 +90,7 @@ For example,
 [[command.options]]
 name = "-t"
 multiple=true
-help="Transformers for types. Pass a type-function pair. Each instance of the type will be converted with the function. For example, use ``-tdict=collections.OrderedDict`` to convert all ``dict`` objects to ``OrderedDict``. ``eval`` is used on both sides of the ``=``."
+help="Transformers for types. Pass a type-function pair. Each instance of the type will be converted with the function. For example, use ``-tdict=collections.OrderedDict`` to convert all ``dict`` objects to ``OrderedDict``. The right-hand side of the ``=`` is Python code which will be executed. It may use ``x`` as a reference to the input value.
 
 [[command.stages]]
 command = 'map'
