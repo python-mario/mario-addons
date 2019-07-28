@@ -2,7 +2,6 @@
 
 import builtins
 import collections.abc
-import importlib
 import typing as t
 
 import mario.interpret
@@ -76,10 +75,10 @@ def get_type_object(namespaced_type_name: str) -> t.Type:
         if module is not None:
             break
     else:
-
         raise ImportError(module_name)
 
     obj = module
+    # pylint: disable=undefined-loop-variable
     remainder = namespaced_type_name[len(module_name) :]
     names = [name for name in remainder.split(".") if name]
 
