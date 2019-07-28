@@ -1,0 +1,1 @@
+``walk -t`` no longer uses ``eval`` on the left-hand side of the equal sign. That value can only refer to a type by name.
