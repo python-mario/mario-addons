@@ -7,7 +7,7 @@ Write each input item to its toml representation.
 
 For example,
 
-.. code-block::
+.. code-block:: bash
 
 
     $ mario read-json write-toml map str.rstrip <<EOF
