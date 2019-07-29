@@ -23,14 +23,14 @@ jobs:
     sudo: required
     env:
     - TOXENV=doc
-  - stage: deploy-to-github
+  - stage: Bump version and open pull request from release into master.
     if: branch = release
     python: 3.7
     dist: xenial
     sudo: required
     deploy:
       on:
-        branch: master
+        branch: release
       provider: script
       script: bash ci/bump_and_push.bash
   - stage: Deploy to PyPI
