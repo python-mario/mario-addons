@@ -6,9 +6,14 @@ set -euo pipefail
 
 echo Setup.
 pip install httpie
+pip install towncrier
 
-# Checkout master
+echo Checkout master.
 git checkout master
+
+
+echo Checking for changelog items.
+python -m towncrier.check || exit 0
 
 echo Configure git.
 git config user.name "$GIT_AUTHOR_NAME"
