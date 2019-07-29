@@ -32,7 +32,7 @@ tox -e bump
 
 
 echo Rebase onto master.
-git fetch origin/master
+git fetch origin
 git rebase origin/master
 
 echo Push to remote branch.
