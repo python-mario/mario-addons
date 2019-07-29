@@ -10,12 +10,13 @@ pip install towncrier
 
 
 echo Add remote.
-git remote add authorized-origin https://"${GITHUB_TOKEN}"@github.com/"${REPO_OWNER}"/"${REPO_NAME}".git
+git remote remove origin
+git remote add origin https://"${GITHUB_TOKEN}"@github.com/"${REPO_OWNER}"/"${REPO_NAME}".git
 
 
 echo Checkout master.
 git fetch --all
-git checkout -b master authorized-origin/master
+git checkout -b master origin/master
 
 
 echo Checking for changelog items.
@@ -31,11 +32,11 @@ tox -e bump
 
 
 echo Rebase onto master.
-git fetch authorized-origin/master
-git rebase authorized-origin/master
+git fetch origin/master
+git rebase origin/master
 
 echo Push to remote branch.
-git push --set-upstream authorized-origin master --follow-tags
+git push --set-upstream origin master --follow-tags
 
 echo Release to PyPI.
 tox -e release
