@@ -7,6 +7,7 @@ set -euo pipefail
 echo Setup.
 pip install httpie
 pip install towncrier
+pip install bump2version
 
 
 echo Add remote.
@@ -19,8 +20,15 @@ git fetch --all
 git checkout -b master origin/master
 
 
-echo Checking for changelog items.
-python -m towncrier.check || exit 0
+echo Checking for changes since last release.
+last_release="$( bump2version --dry-run --list patch | grep current_version | sed -r 's/^.*=//')"
+if [[ $( git diff --name-only HEAD.."$last_release" ) ]]
+then
+    echo "Changes found. Continuing"
+else
+    echo "No changes found. Exiting."
+    exit 0
+fi
 
 
 echo Configure git.
