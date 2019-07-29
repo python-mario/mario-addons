@@ -28,6 +28,9 @@ git branch -m "${new_version}"
 echo Add remote.
 git remote add authorized-origin https://"${GITHUB_TOKEN}"@github.com/"${REPO_OWNER}"/"${REPO_NAME}".git
 
+echo Rebase onto master.
+git rebase authorized-origin/master
+
 echo Push to remote branch.
 git push --set-upstream authorized-origin "$new_version"  --follow-tags
 
@@ -39,7 +42,7 @@ http \
     POST https://api.github.com/repos/"${REPO_OWNER}"/"${REPO_NAME}"/pulls  \
     title="Merge new version: ${new_version}" \
     head="${new_version}" \
-    base="release" \
+    base="master" \
     >posted_pull_request.json \
     2>/dev/null
 

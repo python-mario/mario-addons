@@ -24,7 +24,7 @@ jobs:
     env:
     - TOXENV=doc
   - stage: deploy-to-github
-    if: branch = master
+    if: branch = release
     python: 3.7
     dist: xenial
     sudo: required
@@ -32,9 +32,9 @@ jobs:
       on:
         branch: master
       provider: script
-      script: bash ci/deploy_to_github.bash
+      script: bash ci/bump_and_push.bash
   - stage: Deploy to PyPI
-    if: branch = release
+    if: branch = master
     python: 3.7
     dist: xenial
     sudo: required
@@ -42,7 +42,8 @@ jobs:
     - provider: script
       script: tox -e release
       on:
-        branch: release
+        branch: master
+        tags: true
 
 
 before_install:
