@@ -21,18 +21,15 @@ echo Set an environment variable with the new version number.
 new_version="$(git describe)"
 
 
-echo Rename the new git branch to the version number.
-git branch -m "${new_version}"
-
-
 echo Add remote.
 git remote add authorized-origin https://"${GITHUB_TOKEN}"@github.com/"${REPO_OWNER}"/"${REPO_NAME}".git
 
 echo Rebase onto master.
+git fetch authorized-origin/master
 git rebase authorized-origin/master
 
 echo Push to remote branch.
-git push --set-upstream authorized-origin "$new_version"  --follow-tags
+git push --set-upstream authorized-origin release  --follow-tags
 
 echo Open a pull request from the new branch into release branch.
 echo Write the json output into a file.
@@ -41,7 +38,7 @@ http \
     --json \
     POST https://api.github.com/repos/"${REPO_OWNER}"/"${REPO_NAME}"/pulls  \
     title="Merge new version: ${new_version}" \
-    head="${new_version}" \
+    head=release \
     base="master" \
     >posted_pull_request.json \
     2>/dev/null
