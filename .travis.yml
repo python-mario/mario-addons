@@ -23,7 +23,7 @@ jobs:
     sudo: required
     env:
     - TOXENV=doc
-  - stage: Bump version and open pull request from release into master.
+  - stage: Bump version and push into master.
     if: branch = release
     python: 3.7
     dist: xenial
