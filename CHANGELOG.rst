@@ -12,6 +12,14 @@ Changes for the upcoming release can be found in the `"changelog.d" directory <h
 
 .. towncrier release notes start
 
+0.1.29 (2019-07-30)
+-------------------
+
+
+No significant changes.
+
+
+----
 
 
 0.1.26 (2019-07-29)
