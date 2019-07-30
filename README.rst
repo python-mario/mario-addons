@@ -9,6 +9,9 @@ Overview
 
     * - docs
       - |docs|
+    * - source
+      - | |source|
+        |
     * - tests
       - | |travis|
         |
@@ -19,6 +22,10 @@ Overview
 .. |docs| image:: https://readthedocs.org/projects/mario-addons/badge/?style=flat
     :target: https://readthedocs.org/projects/mario-addons
     :alt: Documentation Status
+
+.. |source| image:: https://shields.io/github/stars/:user/:repo?style=social
+            :target: https://github.com/python-mario/mario-addons
+            :alt: GitHub
 
 
 .. |travis| image:: https://travis-ci.com/python-mario/mario-addons.svg?branch=master
