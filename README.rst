@@ -23,12 +23,12 @@ Overview
     :target: https://readthedocs.org/projects/mario-addons
     :alt: Documentation Status
 
-.. |source| image:: https://shields.io/github/stars/:user/:repo?style=social
+.. |source| image:: https://shields.io/github/stars/python-mario/mario-addons/master
             :target: https://github.com/python-mario/mario-addons
             :alt: GitHub
 
 
-.. |travis| image:: https://travis-ci.com/python-mario/mario-addons.svg?branch=master
+.. |travis| image:: https://travis-ci.com/python-mario/mario-addons/master
     :alt: Travis-CI Build Status
     :target: https://travis-ci.com/python-mario/mario-addons
 
