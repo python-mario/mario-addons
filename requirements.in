@@ -1,2 +1,2 @@
-lxml
-attr
+lxml==4.3.4
+attrs==19.1.0
