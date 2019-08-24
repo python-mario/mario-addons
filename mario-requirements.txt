@@ -1,2 +1,0 @@
-# Mario is in a *-requirements.txt file so dependabot will see it.
-mario==0.0.151
