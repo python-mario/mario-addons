@@ -22,7 +22,7 @@ click==7.0                # via black, cuvner, towncrier
 coverage==4.5.3
 cuvner==18.0.1
 docshtest==0.0.2
-docutils==0.15
+docutils==0.15.2
 entrypoints==0.3          # via flake8
 filelock==3.0.12          # via tox
 flake8==3.7.8
