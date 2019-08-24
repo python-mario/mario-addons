@@ -24,10 +24,6 @@ def read(*names, **kwargs):
 
 
 INSTALL_REQUIRES = read("requirements.in").splitlines()
-# Mario is in a *-requirements.txt file so dependabot will see it. It is pinned
-# to a specific version so that when Mario makes backwards-incompatible changes,
-# mario-addons won't install a version it's incompatible with.
-INSTALL_REQUIRES += read("mario-requirements.txt").splitlines()
 DEV_INSTALL_REQUIRES = read("dev-requirements.txt").splitlines()
 
 
