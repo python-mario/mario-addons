@@ -17,7 +17,7 @@ bump2version==0.5.10
 certifi==2019.6.16        # via requests
 cfgv==2.0.1               # via pre-commit
 chardet==3.0.4            # via requests
-check-manifest==0.39
+check-manifest==0.40
 click==7.0                # via black, cuvner, towncrier
 coverage==4.5.4
 cuvner==18.0.1
