@@ -37,7 +37,7 @@ markupsafe==1.1.1         # via jinja2
 mccabe==0.6.1             # via flake8, pylint
 more-itertools==7.1.0     # via pytest
 mypy-extensions==0.4.1    # via mypy
-mypy==0.730
+mypy==0.740
 nodeenv==1.3.3            # via pre-commit
 packaging==19.0           # via pytest, pytest-sugar, tox
 pathtools==0.1.2          # via watchdog

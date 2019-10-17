@@ -29,7 +29,7 @@ markupsafe==1.1.1         # via jinja2
 marshmallow==3.0rc8       # via mario
 more-itertools==7.2.0     # via pytest
 mypy-extensions==0.4.1    # via mypy, trio-typing
-mypy==0.730               # via trio-typing
+mypy==0.740               # via trio-typing
 outcome==1.0.0            # via trio
 packaging==19.1           # via pytest, sphinx
 parso==0.4.0              # via mario
